@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Detectives de la tilde · Castellano 5.º de primaria</title>
+<meta name="description" content="Página interactiva para 5.º de primaria: acentuación, diptongos e hiatos y tilde diacrítica.">
+<meta name="theme-color" content="#FF9EC4">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✏️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FDFDFB; --grid:#E2ECF8; --card:#FFFFFF; --soft:#F3F6FC;
+  --ink:#23264A; --muted:#62668A; --pen:#2F5BD3; --pink:#E8317F;
+  --hl:#FFE45C; --green:#2FA866; --red:#E5483F; --line:#23264A;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#191C31; --grid:#252A47; --card:#232845; --soft:#2B3152;
+    --ink:#F2F1FF; --muted:#A9ADCF; --pen:#8FB0FF; --pink:#FF7DB5;
+    --green:#4CD38A; --red:#FF7A72; --line:#8D93C4;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:18px;line-height:1.55;-webkit-tap-highlight-color:transparent;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+h1,h2,h3{font-family:"Baloo 2","Nunito",system-ui,sans-serif;line-height:1.1;margin:0 0 .4em;font-weight:800}
+h3{font-size:1.35rem}
+p{margin:.5em 0}
+b,strong{font-weight:900}
+a{color:var(--pen)}
+.wrap{max-width:1020px;margin:0 auto;padding:0 18px}
+:focus-visible{outline:4px solid var(--pen);outline-offset:3px;border-radius:10px}
+.hl{background:linear-gradient(transparent 50%,var(--hl) 50%,var(--hl) 92%,transparent 92%);padding:0 .12em}
+@media (prefers-color-scheme: dark){.hl{background:linear-gradient(transparent 50%,rgba(255,228,92,.35) 50%,rgba(255,228,92,.35) 92%,transparent 92%)}}
+.t-acc{color:var(--pink);font-weight:900}
+
+/* capçalera */
+header.top{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:2.5px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.topbar{display:flex;align-items:center;gap:10px;min-height:62px}
+.brand{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:1.3rem;text-decoration:none;color:var(--ink);flex:none;white-space:nowrap}
+.nav{display:flex;gap:8px;overflow-x:auto;flex:1;scrollbar-width:none;padding:6px 2px;-webkit-overflow-scrolling:touch}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:none;padding:7px 14px;border-radius:999px;border:2.5px solid var(--line);font-weight:900;text-decoration:none;color:var(--ink);background:var(--card);font-size:.95rem}
+.nav a.active{background:var(--c);color:#23264A}
+.stars{flex:none;font-weight:900;background:var(--hl);color:#23264A;border:2.5px solid #23264A;border-radius:999px;padding:5px 12px;white-space:nowrap}
+.stars.bump{animation:pop .6s}
+.iconbtn{flex:none;width:46px;height:46px;border-radius:50%;border:2.5px solid var(--line);background:var(--card);font-size:1.2rem;cursor:pointer;color:var(--ink)}
+@media (max-width:980px){.brand .txt{display:none}}
+@media (max-width:640px){.topbar{gap:6px}.nav a{padding:6px 11px}}
+
+/* portada */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;padding:40px 0 10px}
+.mascot{width:clamp(110px,18vw,160px);height:auto;animation:float 3.2s ease-in-out infinite}
+.hero h1{font-size:clamp(2.4rem,7vw,4.2rem);margin:0}
+.hero h1 .l1{display:block;font-size:.45em;color:var(--pen);font-weight:700}
+.bubble{background:var(--card);border:2.5px solid var(--line);border-radius:22px 22px 22px 6px;padding:14px 18px;margin-top:14px;font-size:1.1rem;max-width:60ch}
+.hero-word{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(3.4rem,15vw,7.5rem);line-height:1;text-align:center;margin:26px 0 4px;letter-spacing:.03em;cursor:pointer;user-select:none;-webkit-user-select:none}
+.hero-word .tv{position:relative;display:inline-block;color:var(--pink)}
+.hero-word .drop{position:absolute;left:52%;top:-.12em;width:.12em;height:.32em;background:var(--pink);border-radius:99px;transform:translateX(-30%) rotate(38deg);animation:tdrop 1s cubic-bezier(.3,1.5,.5,1) .7s both}
+.hero-cap{text-align:center;font-weight:900;font-size:1.15rem;color:var(--muted);margin:0 0 6px}
+@keyframes tdrop{0%{transform:translate(-30%,-2.2em) rotate(38deg);opacity:0}60%{opacity:1}100%{transform:translate(-30%,0) rotate(38deg);opacity:1}}
+.hero-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:22px 0 10px}
+.hcard{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:#23264A;background:var(--c);border:2.5px solid #23264A;border-radius:24px;padding:18px 20px;box-shadow:5px 6px 0 #23264A;transition:transform .12s}
+.hcard:active{transform:translate(3px,4px);box-shadow:2px 2px 0 #23264A}
+.hcard span{font-size:2.4rem;line-height:1}
+.hcard b{font-family:"Baloo 2",sans-serif;font-size:1.5rem}
+@media (max-width:560px){.hero{grid-template-columns:1fr;text-align:center;justify-items:center}.bubble{border-radius:22px}}
+
+/* blocs */
+.part{margin:60px 0 16px;padding:28px 24px 22px;border-radius:30px 30px 30px 8px;background:var(--c);color:#23264A;position:relative;overflow:hidden;border:2.5px solid #23264A;box-shadow:6px 7px 0 #23264A;scroll-margin-top:84px}
+.part h2{font-size:clamp(2.1rem,7vw,3.4rem);margin:0}
+.part p{margin:.2em 0 1em;font-weight:800;font-size:1.15rem;max-width:48ch}
+.part .deco{position:absolute;right:-6px;top:-14px;font-size:clamp(5rem,14vw,8rem);opacity:.35;transform:rotate(12deg);pointer-events:none;font-family:"Baloo 2",sans-serif;font-weight:800}
+.subnav{display:flex;flex-wrap:wrap;gap:8px;position:relative}
+.subnav a{background:rgba(255,255,255,.75);color:#23264A;text-decoration:none;font-weight:900;padding:7px 13px;border-radius:999px;font-size:.95rem;border:2px solid #23264A}
+.sec{margin:40px 0;scroll-margin-top:84px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.sec-head h2{font-size:clamp(1.7rem,5vw,2.4rem);margin:0}
+.sec-head h2 .t{background:linear-gradient(transparent 48%,var(--c) 48%,var(--c) 90%,transparent 90%);padding:0 .1em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.num{flex:none;width:50px;height:50px;border-radius:50%;background:var(--card);border:3px solid var(--line);display:grid;place-items:center;font-family:"Baloo 2",sans-serif;font-size:1.7rem;font-weight:800}
+.card{background:var(--card);border-radius:22px;padding:18px 20px;border:2.5px solid var(--line)}
+.card + .card,.card + .lab,.lab + .lab,.lab + .card,.grid + .lab,.grid2 + .lab,.grid + .key,.grid2 + .key,.card + .key,.lab + .key{margin-top:16px}
+.grid > *,.grid2 > *,.rules > *,.vtab > *,.links > *{margin-top:0 !important}
+.big{font-size:1.25rem}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.mini{background:var(--soft);border-radius:18px;padding:12px 14px;font-weight:700}
+.lab{background:var(--card);border:3px dashed var(--line);border-radius:26px;padding:18px 20px 20px}
+.lab-title{display:inline-flex;align-items:center;gap:6px;font-weight:900;background:var(--c);color:#23264A;padding:5px 14px;border-radius:999px;margin-bottom:8px;border:2px solid #23264A;font-size:1.05rem}
+.key{background:var(--hl);color:#23264A;border-radius:18px;padding:14px 18px;font-weight:800;border:2.5px solid #23264A;font-size:1.1rem}
+.tip{background:var(--soft);border-radius:18px;padding:12px 16px;margin-top:14px;border-left:6px solid var(--pen)}
+.msg{min-height:1.6em;font-weight:800;margin-top:12px;font-size:1.08rem}
+.ok{color:var(--green)}.ko{color:var(--red)}
+.center{justify-content:center;text-align:center}
+.ex{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:1.15em}
+.ex u{text-decoration:none;color:var(--pink);border-bottom:3px solid var(--pink)}
+
+/* botons */
+.btn{font:inherit;font-weight:900;border:2.5px solid #23264A;border-radius:16px;padding:10px 18px;min-height:50px;background:var(--c,var(--hl));color:#23264A;box-shadow:3px 4px 0 #23264A;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translate(2px,3px);box-shadow:1px 1px 0 #23264A}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:var(--card);color:var(--ink);border-color:var(--line);box-shadow:3px 4px 0 var(--line)}
+.btn.sel{background:var(--hl)}
+.btn.bad{animation:shake .4s}
+.btn.good{background:#2FA866;color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.22)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+@keyframes slidein{from{transform:translateX(-30px);opacity:0}to{transform:none;opacity:1}}
+@keyframes letterdrop{0%{transform:translateY(-.6em);opacity:0}60%{transform:translateY(.08em);opacity:1}100%{transform:none}}
+
+/* sílabes */
+.syls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 6px}
+.syl{font:inherit;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(1.7rem,6vw,2.5rem);min-width:76px;padding:6px 16px;border-radius:18px;border:3px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;touch-action:manipulation;line-height:1.2}
+.syl.tonic{background:var(--c);color:#23264A;border-color:#23264A;animation:pop .4s}
+.syl.bad{animation:shake .4s;background:rgba(229,72,63,.18)}
+.syl:disabled{cursor:default}
+.say{font:inherit;font-weight:900;border:2.5px solid var(--line);background:var(--soft);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;min-height:44px}
+
+/* tren */
+.typebtns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.train{display:flex;justify-content:center;gap:8px;align-items:flex-end;padding:18px 4px 46px;overflow-x:auto}
+.wagon{position:relative;min-width:80px;padding:12px 10px 16px;background:var(--card);border:3px solid var(--line);border-radius:14px;text-align:center;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(1.3rem,5vw,1.7rem);animation:slidein .45s both;animation-delay:calc(var(--i) * 90ms);flex:none}
+.wagon::before,.wagon::after{content:"";position:absolute;bottom:-13px;width:20px;height:20px;border-radius:50%;background:var(--ink);border:3px solid var(--paper)}
+.wagon::before{left:10px}.wagon::after{right:10px}
+.wagon small{position:absolute;top:calc(100% + 12px);left:-6px;right:-6px;font-size:.72rem;font-family:"Nunito",sans-serif;color:var(--muted);font-weight:900;line-height:1.1}
+.wagon.t{background:var(--c);color:#23264A;border-color:#23264A;box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--pink)}
+.wagon.t small{color:var(--pink)}
+.loco{font-size:2.6rem;flex:none;align-self:flex-end;margin-bottom:-6px}
+.rules{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:14px}
+.rule{background:var(--card);border:2.5px solid var(--line);border-radius:20px;padding:14px 16px}
+.rule h3{display:inline-block;padding:2px 12px;border-radius:99px;background:var(--rc);color:#23264A;border:2px solid #23264A;font-size:1.15rem}
+.rule .yes,.rule .no{display:block;margin-top:4px}
+
+/* màquina */
+.mach{display:grid;gap:12px}
+.mword{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(2.4rem,10vw,3.8rem);text-align:center;letter-spacing:.04em;line-height:1.2}
+.mword .acc{color:var(--pink);display:inline-block;animation:letterdrop .7s cubic-bezier(.3,1.5,.5,1)}
+.mstep{background:var(--soft);border-radius:18px;padding:12px 16px;opacity:.35;pointer-events:none;transition:opacity .3s}
+.mstep.act,.mstep.done{opacity:1;pointer-events:auto}
+.mstep.done{pointer-events:none}
+.mstep h4{margin:0 0 6px;font-size:1.05rem}
+.mstep .opts2{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.hint{color:var(--red);font-weight:800;min-height:1.4em;text-align:center;margin-top:6px}
+.endl{display:inline-block;color:var(--pink);border-bottom:4px solid var(--pink)}
+
+/* lletres */
+.letters{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0}
+.lt{font:inherit;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(1.6rem,7vw,2.4rem);width:clamp(42px,10vw,60px);height:clamp(54px,12vw,72px);border-radius:14px;border:3px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;touch-action:manipulation;padding:0;line-height:1}
+.lt.v{border-color:var(--pink)}
+.lt.okk{background:#2FA866;color:#fff;border-color:#1E7A48;animation:letterdrop .6s}
+.lt.bad{animation:shake .4s;background:rgba(229,72,63,.18)}
+.lt:disabled{cursor:default}
+
+/* qüestionaris */
+.quiz{background:var(--card);border-radius:22px;padding:18px 20px;border:2.5px solid var(--line);margin-top:12px}
+.qbar{height:12px;background:var(--soft);border-radius:99px;overflow:hidden;border:2px solid var(--line)}
+.qbar div{height:100%;background:var(--c,var(--hl));transition:width .4s}
+.qcount{font-size:.92rem;color:var(--muted);font-weight:800;margin:8px 0 2px}
+.qvis{font-size:3.4rem;text-align:center;line-height:1.15;margin-top:6px}
+.qword{font-family:"Baloo 2",sans-serif;font-size:clamp(2.2rem,8vw,3.4rem);font-weight:800;color:var(--ink);letter-spacing:.02em}
+.qtext{font-size:1.22rem;font-weight:900;text-align:center;margin:8px auto 14px;max-width:42ch}
+.qsent{font-size:clamp(1.25rem,4vw,1.55rem);font-weight:800;text-align:center;margin:12px auto 16px;max-width:36ch;line-height:1.5}
+.gap{display:inline-block;min-width:2.8em;border-bottom:4px solid var(--pen);color:var(--pen);text-align:center}
+.opts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.opt{font:inherit;font-weight:900;padding:12px 14px;border-radius:16px;border:2.5px solid var(--line);background:var(--soft);color:var(--ink);min-height:58px;cursor:pointer;touch-action:manipulation;font-size:1.1rem}
+.opt:active{transform:scale(.97)}
+.opt.right{background:#2FA866;border-color:#1E7A48;color:#fff;animation:pop .4s}
+.opt.wrong{background:#E5483F;border-color:#A8302A;color:#fff;animation:shake .4s}
+.opt:disabled{cursor:default}
+.opt:disabled:not(.right):not(.wrong){opacity:.5}
+.qfb{min-height:1.6em;margin:14px 0;text-align:center;font-size:1.05rem}
+.qnext{display:block;margin:0 auto}
+.qnext[hidden]{display:none}
+.qend{text-align:center}
+.emoji-big{font-size:4rem;line-height:1.2}
+
+/* vocals */
+.vtab{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.vbig{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.vw{width:72px;height:72px;border-radius:50%;display:inline-grid;place-items:center;font-family:"Baloo 2",sans-serif;font-size:2.6rem;font-weight:800;color:#23264A;border:3px solid #23264A;line-height:1;flex:none}
+.vw.o{background:#FFB37A}
+.vw.c{background:#9CCBFF;width:58px;height:58px;font-size:2.1rem}
+.vw.ton{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--pink)}
+.vlab{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;align-items:center;margin-top:8px}
+.vlab .lbl{font-weight:900}
+.vrow{display:flex;gap:8px;flex-wrap:wrap}
+.vbtn{width:58px;height:58px;border-radius:50%;font:inherit;font-family:"Baloo 2",sans-serif;font-size:1.9rem;font-weight:800;border:3px solid #23264A;cursor:pointer;color:#23264A;touch-action:manipulation;padding:0;line-height:1}
+.vbtn.o{background:#FFB37A}.vbtn.c{background:#9CCBFF}
+.vbtn.sel{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--pen);transform:scale(1.08)}
+.tonq{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px;background:var(--soft);padding:10px 14px;border-radius:16px;font-weight:800}
+.tonq[hidden]{display:none}
+.tgl{width:96px;height:52px;border-radius:99px;background:#C9CCDA;border:3px solid #23264A;position:relative;cursor:pointer;touch-action:manipulation;flex:none}
+.tgl::after{content:"";position:absolute;top:4px;left:5px;width:38px;height:38px;border-radius:50%;background:#fff;border:3px solid #23264A;transition:left .2s}
+.tgl.on{background:var(--pink)}
+.tgl.on::after{left:46px}
+.vres{display:flex;justify-content:center;align-items:center;gap:26px;margin:22px 0 8px;min-height:130px;flex-wrap:wrap}
+.sbox{display:flex;gap:6px;padding:12px 14px;border:3px dashed var(--line);border-radius:24px;animation:pop .45s;background:var(--card);align-items:center}
+.sbox small{display:block}
+.vsep{font-size:2.2rem;animation:pop .45s}
+.vverd{text-align:center;font-family:"Baloo 2",sans-serif;font-size:clamp(1.5rem,5vw,2rem);font-weight:800;margin:0}
+.vex{text-align:center;font-weight:800;color:var(--muted);margin:2px 0 0}
+
+/* cartes */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.fc{perspective:900px;height:220px;cursor:pointer;background:none;border:0;padding:0;font:inherit;color:inherit;width:100%;touch-action:manipulation}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.fc-f,.fc-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;border:2.5px solid var(--line);display:flex;flex-direction:column;justify-content:center;padding:14px 16px}
+.fc-f{background:var(--c);color:#23264A;align-items:center;text-align:center;border-color:#23264A;box-shadow:4px 5px 0 #23264A}
+.fc-f b{font-family:"Baloo 2",sans-serif;font-size:2.2rem;line-height:1.1;white-space:nowrap}
+.fc-f small{font-weight:900;opacity:.75}
+.fc-b{background:var(--card);transform:rotateY(180deg);text-align:left;font-size:.95rem;gap:8px}
+.fc-b .w{font-family:"Baloo 2",sans-serif;font-size:1.45rem;font-weight:800;color:var(--pink)}
+.fc-b .w.n{color:var(--pen)}
+.qw{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.qw span{background:var(--c);color:#23264A;border:2px solid #23264A;border-radius:99px;padding:5px 14px;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.3rem}
+
+/* enllaços */
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.lgroup h3{margin-bottom:8px}
+.lgroup a{display:flex;align-items:center;gap:10px;background:var(--soft);border:2.5px solid var(--line);border-radius:16px;padding:10px 14px;margin:8px 0;text-decoration:none;color:var(--ink);font-weight:800;min-height:52px}
+.lgroup a:active{transform:scale(.98)}
+.lgroup a span{margin-left:auto;color:var(--muted);font-size:.85rem}
+.starlist{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.starlist li{padding:6px 10px;border-radius:12px;background:var(--soft);font-weight:800;opacity:.6}
+.starlist li.got{opacity:1;background:var(--hl);color:#23264A}
+
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translate(-50%,180%);background:#23264A;color:#fff;padding:12px 22px;border-radius:99px;font-weight:900;z-index:100;transition:transform .4s cubic-bezier(.3,1.4,.5,1);max-width:92vw;text-align:center;border:3px solid var(--hl)}
+#toast.show{transform:translate(-50%,0)}
+.conf{position:fixed;top:-50px;font-size:1.9rem;z-index:99;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(720deg)}}
+.foot{text-align:center;color:var(--muted);padding:30px 0 70px;font-size:.95rem;font-weight:700}
+@media (prefers-reduced-motion: reduce){.mascot{animation:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="#inicio">✏️<span class="txt"> Detectives de la tilde</span></a>
+    <nav class="nav" id="nav" aria-label="Apartados">
+      <a href="#acentuacion" style="--c:#FF9EC4">✍️ Acentuación</a>
+      <a href="#diptongos" style="--c:#8FE3A8">🤝 Diptongos</a>
+      <a href="#diacritica" style="--c:#FFC93C">🔀 Diacrítica</a>
+      <a href="#reto" style="--c:#C3ADFF">🏆 Reto</a>
+    </nav>
+    <button class="iconbtn" id="sndBtn" aria-label="Activar o desactivar el sonido">🔊</button>
+    <div class="stars" id="stars" aria-live="polite" title="Estrellas conseguidas">⭐ <span id="starCount">0</span>/<span id="starTotal">10</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= PORTADA ================= -->
+<section id="inicio" data-part="inicio">
+  <div class="hero">
+    <svg class="mascot" viewBox="0 0 140 150" aria-hidden="true">
+      <rect x="84" y="2" width="20" height="46" rx="10" transform="rotate(38 94 25)" fill="#E8317F" stroke="#23264A" stroke-width="4"/>
+      <ellipse cx="68" cy="96" rx="54" ry="50" fill="#FF9EC4" stroke="#23264A" stroke-width="5"/>
+      <circle cx="52" cy="88" r="7" fill="#23264A"/><circle cx="84" cy="88" r="7" fill="#23264A"/>
+      <circle cx="54.5" cy="85.5" r="2.4" fill="#fff"/><circle cx="86.5" cy="85.5" r="2.4" fill="#fff"/>
+      <path d="M54 106 Q68 118 82 106" stroke="#23264A" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <circle cx="38" cy="104" r="6" fill="#E8317F" opacity=".45"/><circle cx="98" cy="104" r="6" fill="#E8317F" opacity=".45"/>
+    </svg>
+    <div>
+      <h1><span class="l1">Castellano · 5.º de primaria</span>Detectives de la tilde</h1>
+      <div class="bubble">¡Hola! Soy <b>Tildi</b> y llevo una tilde por sombrero. Te ayudaré a descubrir <b>cuándo</b> una palabra lleva tilde y <b>dónde</b> se pone. Cada reto superado te da una <b>⭐</b>. ¿Conseguirás las 10?</div>
+    </div>
+  </div>
+  <div class="hero-word" id="heroWord" role="button" tabindex="0" aria-label="Toca para ver caer la tilde">canci<span class="tv">o<i class="drop"></i></span>n</div>
+  <p class="hero-cap">¡Una rayita tan pequeña cambia mucho una palabra! (Toca la palabra)</p>
+  <div class="hero-cards">
+    <a class="hcard" href="#acentuacion" style="--c:#FF9EC4"><span>✍️</span><b>Acentuación</b><small>Sílaba tónica, agudas, llanas y esdrújulas</small></a>
+    <a class="hcard" href="#diptongos" style="--c:#8FE3A8"><span>🤝</span><b>Diptongos e hiatos</b><small>Vocales que van juntas… o separadas</small></a>
+    <a class="hcard" href="#diacritica" style="--c:#FFC93C"><span>🔀</span><b>Tilde diacrítica</b><small>Palabras gemelas: el / él, tu / tú…</small></a>
+    <a class="hcard" href="#reto" style="--c:#C3ADFF"><span>🏆</span><b>Reto final</b><small>Demuestra lo que has aprendido</small></a>
+  </div>
+</section>
+
+<!-- ================= PARTE 1: ACENTUACIÓN ================= -->
+<div class="part" id="acentuacion" data-part="acentuacion" style="--c:#FF9EC4">
+  <span class="deco" aria-hidden="true">á é í</span>
+  <h2>La acentuación</h2>
+  <p>Aprende a encontrar la sílaba fuerte y a saber si una palabra lleva tilde.</p>
+  <nav class="subnav" aria-label="Apartados de acentuación">
+    <a href="#a1">1. La sílaba tónica</a><a href="#a2">2. Acento y tilde</a><a href="#a3">3. Agudas, llanas y esdrújulas</a><a href="#a4">4. La máquina de la tilde</a><a href="#a5">5. Pon la tilde</a>
+  </nav>
+</div>
+
+<section class="sec" id="a1" data-part="acentuacion" style="--c:#FF9EC4">
+  <div class="sec-head"><div class="num">1</div><h2><span class="t">La sílaba tónica</span></h2></div>
+  <div class="card">
+    <p class="big">Las palabras se dividen en <b>sílabas</b>: <span class="ex">ven · ta · na</span>. En cada palabra hay una sílaba que pronunciamos con <b>más fuerza</b>: es la <span class="hl"><b>sílaba tónica</b></span>. Las demás son <b>átonas</b>.</p>
+    <p class="ex" style="font-size:1.5rem;text-align:center">ven · <u>TA</u> · na &nbsp;&nbsp; pa · <u>PEL</u> &nbsp;&nbsp; <u>ME</u> · sa</p>
+    <div class="tip">🗣️ <b>Truco:</b> di la palabra como si llamaras a alguien desde muy lejos: «¡venta<b>aaa</b>na!». La sílaba que alargas es la tónica.</div>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🎯 Juego: ¡encuentra la sílaba fuerte!</div>
+    <p>Escucha la palabra con 🔊 y toca su sílaba tónica.</p>
+    <div class="row center"><button class="say" id="tonSay">🔊 Escuchar</button><span class="msg" id="tonCount" style="margin:0"></span></div>
+    <div class="syls" id="tonSyls"></div>
+    <p class="msg center" id="tonMsg" aria-live="polite"></p>
+    <div class="row center"><button class="btn" id="tonNext">Siguiente palabra ▶</button></div>
+  </div>
+</section>
+
+<section class="sec" id="a2" data-part="acentuacion" style="--c:#FFB37A">
+  <div class="sec-head"><div class="num">2</div><h2><span class="t">Acento y tilde: no es lo mismo</span></h2></div>
+  <div class="grid2">
+    <div class="card"><h3>🗣️ Acento</h3><p>Es la <b>fuerza de voz</b> con la que decimos la sílaba tónica. ¡Todas las palabras de más de una sílaba lo tienen!</p><p class="ex">ven<u>ta</u>na, <u>me</u>sa, pa<u>pel</u></p></div>
+    <div class="card"><h3>´ Tilde</h3><p>Es la <b>rayita</b> que escribimos sobre la vocal de la sílaba tónica. Solo la llevan <b>algunas</b> palabras, según unas reglas.</p><p class="ex">cami<span class="t-acc">ó</span>n, <span class="t-acc">á</span>rbol, m<span class="t-acc">ú</span>sica</p></div>
+  </div>
+  <div class="key">✍️ La tilde se escribe siempre <b>sobre una vocal</b> (á, é, í, ó, ú) y siempre en la <b>sílaba tónica</b>. La rayita va inclinada así: <b>´</b></div>
+</section>
+
+<section class="sec" id="a3" data-part="acentuacion" style="--c:#FF9EC4">
+  <div class="sec-head"><div class="num">3</div><h2><span class="t">Agudas, llanas y esdrújulas</span></h2></div>
+  <p>Según dónde está la sílaba tónica, las palabras tienen nombre. <b>¡Cuenta siempre desde el final!</b> Toca un tipo para ver su tren.</p>
+  <div class="lab">
+    <div class="lab-title">🚂 El tren de las sílabas</div>
+    <div class="typebtns" id="trainBtns">
+      <button class="btn sel" data-k="aguda">Aguda</button><button class="btn" data-k="llana">Llana</button><button class="btn" data-k="esdrujula">Esdrújula</button><button class="btn" data-k="sobre">Sobresdrújula</button>
+    </div>
+    <div class="train" id="train" aria-live="polite"></div>
+    <p class="msg center" id="trainMsg" style="margin-top:0"></p>
+  </div>
+  <div class="rules">
+    <div class="rule" style="--rc:#FF9EC4"><h3>Agudas</h3><p>Tónica: la <b>última</b> sílaba.</p><span class="yes">✅ Tilde si terminan en <b>vocal, -n o -s</b>: sofá, camión, compás.</span><span class="no">❌ Sin tilde: reloj, pared, feliz, comer.</span></div>
+    <div class="rule" style="--rc:#FFB37A"><h3>Llanas</h3><p>Tónica: la <b>penúltima</b>. También se llaman <b>graves</b>.</p><span class="yes">✅ Tilde si <b>NO</b> terminan en vocal, -n o -s: árbol, lápiz, fácil.</span><span class="no">❌ Sin tilde: mesa, examen, lunes.</span></div>
+    <div class="rule" style="--rc:#FFE45C"><h3>Esdrújulas</h3><p>Tónica: la <b>antepenúltima</b>.</p><span class="yes">✅ <b>Siempre</b> llevan tilde: música, pájaro, teléfono.</span></div>
+    <div class="rule" style="--rc:#C3ADFF"><h3>Sobresdrújulas</h3><p>Tónica: <b>antes</b> de la antepenúltima.</p><span class="yes">✅ <b>Siempre</b> llevan tilde: cuéntamelo, dígaselo.</span></div>
+  </div>
+  <div class="tip">🧠 <b>Truco para recordarlo:</b> las agudas y las llanas son «contrarias». Las agudas llevan tilde con <b>vocal, n, s</b>; las llanas, cuando <b>no</b> acaban así. Las monosílabas (una sola sílaba: sol, pan, fue, dio) normalmente <b>no</b> llevan tilde.</div>
+  <div class="lab">
+    <div class="lab-title">🎯 Juego: ¿qué tipo de palabra es?</div>
+    <div class="quiz" id="tiposQuiz"></div>
+  </div>
+</section>
+
+<section class="sec" id="a4" data-part="acentuacion" style="--c:#FFB37A">
+  <div class="sec-head"><div class="num">4</div><h2><span class="t">La máquina de la tilde</span></h2></div>
+  <p>Los buenos detectives siguen siempre los mismos pasos. ¡Haz que la máquina decida si la palabra lleva tilde!</p>
+  <div class="lab">
+    <div class="lab-title">⚙️ Paso a paso</div>
+    <div class="mach">
+      <div class="mword" id="mWord" aria-live="polite"></div>
+      <div class="mstep" id="m1"><h4>1️⃣ ¿Cuál es la sílaba tónica?</h4><div class="syls" id="mSyls" style="margin:6px 0"></div><div class="row center" style="margin-top:4px"><button class="say" id="mSay">🔊 Escuchar</button></div></div>
+      <div class="mstep" id="m2"><h4>2️⃣ Entonces, la palabra es…</h4><div class="opts2" id="mTypes"><button class="btn" data-k="aguda">Aguda</button><button class="btn" data-k="llana">Llana</button><button class="btn" data-k="esdrujula">Esdrújula</button></div></div>
+      <div class="mstep" id="m3"><h4 id="m3t">3️⃣ ¿Termina en vocal, -n o -s?</h4><div class="opts2" id="mEnd"><button class="btn" data-k="si">Sí</button><button class="btn" data-k="no">No</button></div></div>
+      <div class="hint" id="mHint" aria-live="polite"></div>
+      <div class="key" id="mRes" hidden></div>
+      <div class="row center"><button class="btn" id="mNext">Otra palabra ▶</button><span class="msg" id="mCount" style="margin:0"></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="a5" data-part="acentuacion" style="--c:#FF9EC4">
+  <div class="sec-head"><div class="num">5</div><h2><span class="t">¡Pon la tilde!</span></h2></div>
+  <p>Toca la vocal que lleva tilde. Si crees que la palabra no lleva, toca <b>«No lleva tilde»</b>.</p>
+  <div class="lab">
+    <div class="lab-title">✍️ Juego: el detective de las tildes</div>
+    <div id="pt1"></div>
+  </div>
+</section>
+
+<!-- ================= PARTE 2: DIPTONGOS E HIATOS ================= -->
+<div class="part" id="diptongos" data-part="diptongos" style="--c:#8FE3A8">
+  <span class="deco" aria-hidden="true">🤝</span>
+  <h2>Diptongos e hiatos</h2>
+  <p>Cuando dos vocales se encuentran, a veces van juntas en la misma sílaba… ¡y a veces se separan!</p>
+  <nav class="subnav" aria-label="Apartados de diptongos e hiatos">
+    <a href="#d1">1. Vocales abiertas y cerradas</a><a href="#d2">2. Diptongo e hiato</a><a href="#d3">3. La tilde en diptongos e hiatos</a>
+  </nav>
+</div>
+
+<section class="sec" id="d1" data-part="diptongos" style="--c:#8FE3A8">
+  <div class="sec-head"><div class="num">1</div><h2><span class="t">Vocales abiertas y cerradas</span></h2></div>
+  <div class="vtab">
+    <div class="card"><h3>Abiertas (o fuertes)</h3><div class="vbig"><span class="vw o">a</span><span class="vw o">e</span><span class="vw o">o</span></div><p>Abrimos mucho la boca para decirlas.</p></div>
+    <div class="card"><h3>Cerradas (o débiles)</h3><div class="vbig"><span class="vw c">i</span><span class="vw c">u</span></div><p>Cerramos más la boca para decirlas.</p></div>
+  </div>
+  <div class="tip">🧠 <b>Truco:</b> las cerradas son solo dos, la <b>i</b> y la <b>u</b>. ¡Piensa en la palabra «<b>huí</b>»!</div>
+</section>
+
+<section class="sec" id="d2" data-part="diptongos" style="--c:#6FDCCB">
+  <div class="sec-head"><div class="num">2</div><h2><span class="t">Diptongo e hiato</span></h2></div>
+  <div class="grid2">
+    <div class="card">
+      <h3>🤝 Diptongo</h3>
+      <p>Dos vocales seguidas que se pronuncian <b>en la misma sílaba</b>. Se forma con:</p>
+      <ul>
+        <li>Abierta + cerrada átona: <span class="ex">a<u>ire</u></span> → <span class="ex">ai·re</span>, <span class="ex">pei·ne</span></li>
+        <li>Cerrada átona + abierta: <span class="ex">pia·no</span>, <span class="ex">hue·vo</span></li>
+        <li>Dos cerradas distintas: <span class="ex">ciu·dad</span>, <span class="ex">cui·da·do</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✋ Hiato</h3>
+      <p>Dos vocales seguidas que se pronuncian <b>en sílabas distintas</b>. Pasa con:</p>
+      <ul>
+        <li>Dos abiertas: <span class="ex">le·ón</span>, <span class="ex">po·e·ta</span></li>
+        <li>Dos vocales iguales: <span class="ex">le·er</span>, <span class="ex">zo·o</span></li>
+        <li>Una cerrada <b>tónica</b> y una abierta: <span class="ex">dí·a</span>, <span class="ex">rí·o</span>, <span class="ex">ma·íz</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="tip">🐂 <b>¿Y el triptongo?</b> Son <b>tres</b> vocales en la misma sílaba (cerrada + abierta + cerrada): <span class="ex">buey</span>, <span class="ex">U·ru·guay</span>, <span class="ex">a·ve·ri·guáis</span>. La <b>h</b> entre vocales no las separa: <span class="ex">bú·ho</span> es un hiato.</div>
+  <div class="lab">
+    <div class="lab-title">🧪 Laboratorio de vocales</div>
+    <p>Elige dos vocales y mira si se dan la mano (diptongo) o se separan (hiato).</p>
+    <div class="vlab">
+      <span class="lbl">1.ª vocal</span><div class="vrow" id="vr1"></div>
+      <span class="lbl">2.ª vocal</span><div class="vrow" id="vr2"></div>
+    </div>
+    <div class="tonq" id="tonq" hidden><button class="tgl" id="tonTgl" aria-pressed="false" aria-label="La vocal cerrada es tónica"></button><span id="tonqTxt">¿La vocal cerrada suena fuerte (es la tónica)?</span></div>
+    <div class="vres" id="vres" aria-live="polite"></div>
+    <p class="vverd" id="vverd"></p>
+    <p class="vex" id="vex"></p>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🎯 Juego: ¿diptongo o hiato?</div>
+    <div class="quiz" id="dhQuiz"></div>
+  </div>
+</section>
+
+<section class="sec" id="d3" data-part="diptongos" style="--c:#8FE3A8">
+  <div class="sec-head"><div class="num">3</div><h2><span class="t">La tilde en diptongos e hiatos</span></h2></div>
+  <div class="grid">
+    <div class="card"><h3>🤝 Diptongos</h3><p>Siguen las <b>reglas generales</b>. Si llevan tilde, va sobre la <b>vocal abierta</b>:</p><p class="ex">can·ci<span class="t-acc">ó</span>n, des·pu<span class="t-acc">é</span>s, mur·ci<span class="t-acc">é</span>·la·go</p><p>Con <b>ui / iu</b>, la tilde va en la segunda: <span class="ex">cons·tru<span class="t-acc">í</span></span></p></div>
+    <div class="card"><h3>✋ Hiato de dos abiertas</h3><p>También siguen las <b>reglas generales</b>:</p><p class="ex">le·<span class="t-acc">ó</span>n (aguda en -n), h<span class="t-acc">é</span>·ro·e (esdrújula), po·e·ta (llana en vocal: sin tilde)</p></div>
+    <div class="card"><h3>⭐ Hiato con i / u tónica</h3><p>¡Esta regla manda más que las otras! La vocal cerrada tónica lleva tilde <b>siempre</b>:</p><p class="ex">d<span class="t-acc">í</span>·a, r<span class="t-acc">í</span>·o, ba·<span class="t-acc">ú</span>l, ma·<span class="t-acc">í</span>z, re·<span class="t-acc">í</span>r</p><p>Fíjate: <b>maíz</b> es aguda en -z y <b>reír</b> en -r… ¡y llevan tilde igualmente!</p></div>
+  </div>
+  <div class="lab">
+    <div class="lab-title">✍️ Juego: pon la tilde (diptongos e hiatos)</div>
+    <div id="pt2"></div>
+  </div>
+</section>
+
+<!-- ================= PARTE 3: TILDE DIACRÍTICA ================= -->
+<div class="part" id="diacritica" data-part="diacritica" style="--c:#FFC93C">
+  <span class="deco" aria-hidden="true">él</span>
+  <h2>La tilde diacrítica</h2>
+  <p>Hay palabras «gemelas» que se escriben igual pero significan cosas distintas. La tilde nos ayuda a distinguirlas.</p>
+  <nav class="subnav" aria-label="Apartados de la tilde diacrítica">
+    <a href="#t1">1. Las parejas</a><a href="#t2">2. Palabras para preguntar</a><a href="#t3">3. ¡A practicar!</a>
+  </nav>
+</div>
+
+<section class="sec" id="t1" data-part="diacritica" style="--c:#FFC93C">
+  <div class="sec-head"><div class="num">1</div><h2><span class="t">Las parejas gemelas</span></h2></div>
+  <div class="card"><p class="big">Ya sabes que los monosílabos (palabras de una sílaba) normalmente <b>no</b> llevan tilde. Pero algunos sí, para no confundirlos con su gemelo: es la <span class="hl"><b>tilde diacrítica</b></span>.</p></div>
+  <div class="lab">
+    <div class="lab-title">🃏 Gira las cartas</div>
+    <p>Toca cada carta para darle la vuelta y descubrir la diferencia.</p>
+    <div class="cards" id="cards"></div>
+    <p class="msg center" id="cardsMsg" aria-live="polite"></p>
+  </div>
+</section>
+
+<section class="sec" id="t2" data-part="diacritica" style="--c:#FFB37A">
+  <div class="sec-head"><div class="num">2</div><h2><span class="t">Palabras para preguntar y exclamar</span></h2></div>
+  <div class="card">
+    <p class="big">Estas palabras llevan tilde cuando <b>preguntan</b> o <b>exclaman</b>:</p>
+    <div class="qw"><span>qué</span><span>quién</span><span>cómo</span><span>cuándo</span><span>dónde</span><span>cuánto</span><span>cuál</span></div>
+    <div class="grid2">
+      <div class="mini">✅ <b>Con tilde</b><br><span class="ex">¿Qué quieres?</span><br><span class="ex">¡Cómo llueve!</span><br><span class="ex">No sé dónde está.</span> <small>(es una pregunta escondida)</small></div>
+      <div class="mini">❌ <b>Sin tilde</b><br><span class="ex">Dice que vendrá.</span><br><span class="ex">Hazlo como quieras.</span><br><span class="ex">Ven cuando puedas.</span></div>
+    </div>
+  </div>
+  <div class="tip">🔍 <b>Truco:</b> si puedes poner la frase entre <b>¿?</b> o <b>¡!</b>, o hay una pregunta escondida (después de «no sé», «dime», «pregúntale»…), la palabra lleva tilde.</div>
+</section>
+
+<section class="sec" id="t3" data-part="diacritica" style="--c:#FFC93C">
+  <div class="sec-head"><div class="num">3</div><h2><span class="t">¡A practicar!</span></h2></div>
+  <div class="lab">
+    <div class="lab-title">🎯 Juego: elige la palabra correcta</div>
+    <div class="quiz" id="diaQuiz"></div>
+  </div>
+</section>
+
+<!-- ================= RETO FINAL ================= -->
+<section class="sec" id="reto" data-part="reto" style="--c:#C3ADFF">
+  <div class="part" style="--c:#C3ADFF;margin-top:20px">
+    <span class="deco" aria-hidden="true">🏆</span>
+    <h2>Reto final</h2>
+    <p>¡Demuestra que eres un auténtico detective de la tilde! Acierta al menos 8 de 12 y ganarás la última estrella.</p>
+  </div>
+  <div class="quiz" id="finalQuiz"></div>
+  <div class="card" style="margin-top:16px">
+    <h3>⭐ Tus estrellas</h3>
+    <ul class="starlist" id="starList"></ul>
+  </div>
+</section>
+
+<section class="sec" id="mas" data-part="reto" style="--c:#7CBDFF">
+  <div class="sec-head"><div class="num">+</div><h2><span class="t">Para seguir practicando</span></h2></div>
+  <p>Las fichas que ha preparado tu maestra o maestro. Se abren en otra pestaña.</p>
+  <div class="links">
+    <div class="card lgroup"><h3>✍️ Acentuación</h3>
+      <a href="https://www.liveworksheets.com/worksheet/es/esl-vocabulary/545780" target="_blank" rel="noopener">📄 Ficha 1<span>Liveworksheets ↗</span></a>
+      <a href="https://www.liveworksheets.com/worksheet/es/esl-grammar/325402" target="_blank" rel="noopener">📄 Ficha 2<span>Liveworksheets ↗</span></a>
+      <a href="https://www.liveworksheets.com/worksheet/es/esl-vocabulary/611692" target="_blank" rel="noopener">📄 Ficha 3<span>Liveworksheets ↗</span></a>
+      <a href="https://www.liveworksheets.com/worksheet/es/esl-vocabulary/497724" target="_blank" rel="noopener">📄 Ficha 4<span>Liveworksheets ↗</span></a>
+    </div>
+    <div class="card lgroup"><h3>🤝 Diptongos e hiatos</h3>
+      <a href="https://www.liveworksheets.com/worksheet/es/esl-vocabulary/165338" target="_blank" rel="noopener">📄 Ficha 1<span>Liveworksheets ↗</span></a>
+      <a href="https://www.liveworksheets.com/worksheet/es/esl-grammar/92890" target="_blank" rel="noopener">📄 Ficha 2<span>Liveworksheets ↗</span></a>
+      <a href="https://www.liveworksheets.com/worksheet/es/lengua-castellana/1555807" target="_blank" rel="noopener">📄 Ficha 3<span>Liveworksheets ↗</span></a>
+      <a href="https://www.liveworksheets.com/worksheet/es/esl-grammar/211039" target="_blank" rel="noopener">📄 Ficha 4<span>Liveworksheets ↗</span></a>
+    </div>
+    <div class="card lgroup"><h3>🔀 Tilde diacrítica</h3>
+      <a href="https://deleahora.com/actividades/gramatica/ejercicio-de-acentuacion-la-tilde-diacritica" target="_blank" rel="noopener">📄 Ficha 1<span>DELE Ahora ↗</span></a>
+      <a href="https://www.liveworksheets.com/worksheet/es/esl-grammar/757277" target="_blank" rel="noopener">📄 Ficha 2<span>Liveworksheets ↗</span></a>
+      <a href="https://www.liveworksheets.com/es/worksheet/es/lengua-espanola/1602153" target="_blank" rel="noopener">📄 Ficha 3<span>Liveworksheets ↗</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="foot wrap">Castellano · 5.º de primaria · Acentuación, diptongos e hiatos y tilde diacrítica.<br>Hecho con ✏️ para aprender jugando.</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const strip = w => w.normalize('NFD').replace(/\u0301/g,'').normalize('NFC');
+const ACC = {a:'á',e:'é',i:'í',o:'ó',u:'ú'};
+const isVowel = ch => 'aeiouáéíóú'.includes(ch.toLowerCase());
+const tildeIndex = w => { const s = strip(w); for(let i=0;i<w.length;i++) if(w[i]!==s[i]) return i; return -1; };
+
+/* ---------- So i veu ---------- */
+let actx = null, soundOn = true;
+function tone(freq, dur = .12, type = 'sine', vol = .07){
+  if(!soundOn) return;
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if(actx.state === 'suspended') actx.resume();
+    const o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime;
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + dur + .03);
+  }catch(e){}
+}
+const sfx = {
+  ok(){ tone(660,.1); setTimeout(()=>tone(990,.16),100); },
+  ko(){ tone(200,.22,'triangle',.08); },
+  click(){ tone(540,.05,'square',.025); },
+  star(){ [523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.13),i*90)); }
+};
+$('#sndBtn').addEventListener('click', e => { soundOn = !soundOn; e.currentTarget.textContent = soundOn ? '🔊' : '🔇'; });
+let esVoice = null;
+function loadVoices(){ try{ const vs = speechSynthesis.getVoices(); esVoice = vs.find(v=>/^es[-_]ES/i.test(v.lang)) || vs.find(v=>/^es/i.test(v.lang)) || null; }catch(e){} }
+if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function say(t){
+  if(!('speechSynthesis' in window)){ toast('Este navegador no puede leer en voz alta.'); return; }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(t); u.lang = 'es-ES'; if(esVoice) u.voice = esVoice; u.rate = .75;
+  speechSynthesis.speak(u);
+}
+
+/* ---------- Estrelles ---------- */
+const ACTS = {
+  tonica:'¡Encuentra la sílaba fuerte!', tipos:'¿Qué tipo de palabra es?', maquina:'La máquina de la tilde',
+  pontilde:'Pon la tilde', vocales:'Laboratorio de vocales', dh:'¿Diptongo o hiato?',
+  tildedh:'Tildes en diptongos e hiatos', cartas:'Las parejas gemelas', diacritica:'Elige la palabra', reto:'Reto final'
+};
+const TOTAL = Object.keys(ACTS).length;
+const done = new Set();
+function renderStars(){
+  $('#starCount').textContent = done.size; $('#starTotal').textContent = TOTAL;
+  $('#starList').innerHTML = Object.entries(ACTS).map(([k,n]) => `<li class="${done.has(k)?'got':''}">${done.has(k)?'⭐':'☆'} ${n}</li>`).join('');
+}
+let toastT;
+function toast(m){ const t=$('#toast'); t.innerHTML=m; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2800); }
+function confetti(){
+  const em=['⭐','´','✏️','🎉','✨','🔍'];
+  for(let i=0;i<42;i++){
+    const s=document.createElement('span'); s.className='conf'; s.textContent=em[i%em.length];
+    s.style.left=(Math.random()*100)+'vw'; s.style.animationDuration=(2.2+Math.random()*2.4)+'s'; s.style.animationDelay=(Math.random()*.8)+'s';
+    document.body.appendChild(s); setTimeout(()=>s.remove(),6000);
+  }
+}
+function award(id){
+  if(done.has(id)) return;
+  done.add(id); renderStars(); sfx.star();
+  toast(`⭐ ¡Nueva estrella: ${ACTS[id]}!`);
+  const s=$('#stars'); s.classList.remove('bump'); void s.offsetWidth; s.classList.add('bump');
+  if(done.size === TOTAL) setTimeout(()=>{ confetti(); toast('🏆 ¡Tienes las 10 estrellas! ¡Eres un detective de la tilde!'); }, 1400);
+}
+renderStars();
+
+/* ---------- Portada: la tilde que cau ---------- */
+(function(){
+  const w=$('#heroWord');
+  const replay=()=>{ const d=$('.drop',w); const n=d.cloneNode(); n.style.animationDelay='0s'; d.replaceWith(n); sfx.click(); };
+  w.addEventListener('click', replay);
+  w.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); replay(); } });
+})();
+
+/* ---------- Qüestionari reutilitzable ---------- */
+function makeQuiz(root, questions, {id=null, shuffleQ=false, shuffleO=true, take=0, intro=''} = {}){
+  let qs, i, score, answered, needed;
+  function start(){
+    qs = shuffleQ ? shuffle(questions.slice()) : questions.slice();
+    if(take) qs = qs.slice(0, take);
+    needed = Math.ceil(qs.length * .6); i = 0; score = 0; show();
+  }
+  function show(){
+    answered = false;
+    const q = qs[i];
+    let opts = q.o.map((t,k) => ({t, ok:k===q.a}));
+    if(shuffleO) opts = shuffle(opts);
+    const body = q.s ? `<p class="qtext" style="margin-bottom:0">${q.q || intro}</p><p class="qsent">${q.s}</p>`
+                     : `${q.v ? `<div class="qvis">${q.v}</div>` : ''}<p class="qtext">${q.q || intro}</p>`;
+    root.innerHTML = `<div class="qbar"><div style="width:${i/qs.length*100}%"></div></div>
+      <div class="qcount">Pregunta ${i+1} de ${qs.length} · aciertos: ${score}</div>
+      ${body}
+      <div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}">${o.t}</button>`).join('')}</div>
+      <div class="qfb" aria-live="polite"></div>
+      <button class="btn qnext" hidden>${i < qs.length-1 ? 'Siguiente pregunta ▶' : 'Ver el resultado 🏁'}</button>`;
+    const bs = $$('.opt', root);
+    bs.forEach((b,k) => b.addEventListener('click', () => {
+      if(answered) return; answered = true;
+      const ok = opts[k].ok;
+      if(ok){ score++; sfx.ok(); } else sfx.ko();
+      bs.forEach((x,j) => { x.disabled = true; if(opts[j].ok) x.classList.add('right'); else if(j===k) x.classList.add('wrong'); });
+      if(q.s){ const g=$('.qsent .gap', root); if(g) g.textContent = q.o[q.a]; }
+      $('.qfb', root).innerHTML = (ok ? '<b class="ok">✅ ¡Muy bien!</b> ' : '<b class="ko">❌ ¡Casi!</b> ') + (q.e || '');
+      $('.qcount', root).textContent = `Pregunta ${i+1} de ${qs.length} · aciertos: ${score}`;
+      $('.qnext', root).hidden = false;
+    }));
+    $('.qnext', root).addEventListener('click', () => { i++; if(i < qs.length) show(); else end(); });
+  }
+  function end(){
+    const ok = score >= needed, perfect = score === qs.length;
+    root.innerHTML = `<div class="qend"><div class="emoji-big">${perfect?'🏆':ok?'🎉':'💪'}</div>
+      <h3>¡Has acertado ${score} de ${qs.length}!</h3>
+      <p>${perfect ? '¡Perfecto! ¡Eres un detective genial!' : ok ? '¡Muy buen trabajo!' : `¡Casi! Necesitas ${needed} aciertos para ganar la estrella. ¡Inténtalo otra vez!`}</p>
+      <button class="btn again">↺ Jugar otra vez</button></div>`;
+    $('.again', root).addEventListener('click', start);
+    if(ok && id) award(id);
+    if(perfect) confetti();
+  }
+  start();
+}
+const W = w => `<span class="qword">${w}</span>`;
+const GAP = '<span class="gap">___</span>';
+
+/* =====================================================
+   PARTE 1 · ACENTUACIÓN
+   ===================================================== */
+
+/* 1. Sílaba tònica */
+(function(){
+  const ALL = [
+    [['ven','ta','na'],1],[['pa','pel'],1],[['me','sa'],0],[['re','loj'],1],[['ma','ri','po','sa'],2],[['ca','ra','col'],2],
+    [['za','pa','to'],1],[['a','zul'],1],[['ciu','dad'],1],[['li','bro'],0],[['or','de','na','dor'],3],[['ca','mi','se','ta'],2],
+    [['co','co','dri','lo'],2],[['a','mi','go'],1],[['co','mer'],1],[['e','le','fan','te'],2]
+  ];
+  const N=8; let list, i, score, answered;
+  const box=$('#tonSyls'), msg=$('#tonMsg'), next=$('#tonNext'), cnt=$('#tonCount');
+  function start(){ list=shuffle(ALL.slice()).slice(0,N); i=0; score=0; show(); }
+  function show(){
+    answered=false;
+    const [s] = list[i];
+    box.innerHTML = s.map((x,k)=>`<button class="syl" data-k="${k}">${x}</button>`).join('');
+    msg.textContent=''; next.textContent = i<N-1 ? 'Siguiente palabra ▶' : 'Ver el resultado 🏁'; next.disabled=true;
+    cnt.textContent = `Palabra ${i+1} de ${N} · aciertos: ${score}`;
+    $$('.syl',box).forEach(b=>b.addEventListener('click',()=>pick(+b.dataset.k)));
+  }
+  function pick(k){
+    if(answered) return; answered=true;
+    const [s,t]=list[i]; const bs=$$('.syl',box);
+    bs.forEach(b=>b.disabled=true);
+    bs[t].classList.add('tonic');
+    if(k===t){ score++; sfx.ok(); msg.innerHTML=`<span class="ok">✅ ¡Muy bien! La sílaba tónica es «${s[t]}».</span>`; }
+    else { bs[k].classList.add('bad'); sfx.ko(); msg.innerHTML=`<span class="ko">❌ Escucha otra vez: la sílaba fuerte es «${s[t]}».</span>`; }
+    cnt.textContent = `Palabra ${i+1} de ${N} · aciertos: ${score}`;
+    next.disabled=false;
+  }
+  next.addEventListener('click',()=>{
+    if(next.dataset.end){ delete next.dataset.end; start(); return; }
+    i++;
+    if(i<N){ show(); return; }
+    box.innerHTML=`<span class="emoji-big">${score===N?'🏆':score>=5?'🎉':'💪'}</span>`;
+    msg.innerHTML = score>=5 ? `¡Has acertado ${score} de ${N}! ¡Tienes muy buen oído!` : `Has acertado ${score} de ${N}. Necesitas 5 para la estrella. ¡Inténtalo otra vez!`;
+    if(score>=5) award('tonica');
+    next.textContent='↺ Jugar otra vez'; next.dataset.end='1';
+  });
+  $('#tonSay').addEventListener('click',()=>{ if(list[i]) say(list[i][0].join('')); });
+  start();
+})();
+
+/* 3. El tren de les síl·labes */
+(function(){
+  const T = {
+    aguda:{s:['co','ra','zón'],t:2,m:'<b>Aguda</b>: la sílaba tónica es la <b>última</b>.'},
+    llana:{s:['ca','mi','se','ta'],t:2,m:'<b>Llana</b>: la sílaba tónica es la <b>penúltima</b>.'},
+    esdrujula:{s:['te','lé','fo','no'],t:1,m:'<b>Esdrújula</b>: la sílaba tónica es la <b>antepenúltima</b>.'},
+    sobre:{s:['cuén','ta','me','lo'],t:0,m:'<b>Sobresdrújula</b>: la tónica va <b>antes</b> de la antepenúltima.'}
+  };
+  const NAMES=['última','penúltima','antepenúltima','anterior'];
+  const train=$('#train'), msg=$('#trainMsg');
+  function show(k){
+    const d=T[k], n=d.s.length;
+    train.innerHTML = d.s.map((x,i)=>`<div class="wagon${i===d.t?' t':''}" style="--i:${i}">${x}<small>${NAMES[n-1-i]}</small></div>`).join('') + '<span class="loco" aria-hidden="true">🚂</span>';
+    msg.innerHTML = d.m + ' 👉 Contamos desde el final, ¡desde la locomotora!';
+    $$('#trainBtns .btn').forEach(b=>b.classList.toggle('sel', b.dataset.k===k));
+  }
+  $$('#trainBtns .btn').forEach(b=>b.addEventListener('click',()=>{ show(b.dataset.k); sfx.click(); say(T[b.dataset.k].s.join('')); }));
+  show('aguda');
+
+  const A='Aguda', L='Llana', E='Esdrújula', S='Sobresdrújula', O=[A,L,E,S];
+  const q = (w,s,a) => ({v:W(w), q:'¿Qué tipo de palabra es?', o:O, a, e:`${s.replace(/\*(.+?)\*/,'<b>$1</b>')}: la tónica es la ${['última','penúltima','antepenúltima','anterior a la antepenúltima'][a]}.`});
+  makeQuiz($('#tiposQuiz'), [
+    q('sofá','so-*fá*',0), q('camión','ca-*mión*',0), q('reloj','re-*loj*',0), q('corazón','co-ra-*zón*',0), q('papel','pa-*pel*',0),
+    q('árbol','*ár*-bol',1), q('lápiz','*lá*-piz',1), q('mesa','*me*-sa',1), q('examen','e-*xa*-men',1), q('fácil','*fá*-cil',1),
+    q('música','*mú*-si-ca',2), q('pájaro','*pá*-ja-ro',2), q('teléfono','te-*lé*-fo-no',2), q('brújula','*brú*-ju-la',2),
+    q('cuéntamelo','*cuén*-ta-me-lo',3), q('dígaselo','*dí*-ga-se-lo',3)
+  ], {id:'tipos', shuffleQ:true, shuffleO:false, take:10});
+})();
+
+/* 4. La màquina de la tilde */
+(function(){
+  const WORDS = [
+    ['canción',['can','cion'],1],['reloj',['re','loj'],1],['sofá',['so','fa'],1],['pared',['pa','red'],1],
+    ['árbol',['ar','bol'],0],['lápiz',['la','piz'],0],['mesa',['me','sa'],0],['examen',['e','xa','men'],1],
+    ['música',['mu','si','ca'],0],['pájaro',['pa','ja','ro'],0],['lunes',['lu','nes'],0],['compás',['com','pas'],1],
+    ['azúcar',['a','zu','car'],1],['feliz',['fe','liz'],1],['ratón',['ra','ton'],1],['ventana',['ven','ta','na'],1]
+  ];
+  const typeOf = (n,t) => t===n-1 ? 'aguda' : t===n-2 ? 'llana' : 'esdrujula';
+  const TN = {aguda:'aguda', llana:'llana', esdrujula:'esdrújula'};
+  // comprovació interna: la regla ha de coincidir amb la paraula
+  WORDS.forEach(([w,s,t])=>{ const st=strip(w), ty=typeOf(s.length,t), vns=/[aeiouns]$/.test(st);
+    const rule = ty==='esdrujula' ? true : ty==='aguda' ? vns : !vns;
+    if(s.join('')!==st || rule!==(tildeIndex(w)>=0)) console.warn('Revisa', w); });
+  let order=shuffle(WORDS.slice()), idx=0, cur, step, solved=0;
+  const mWord=$('#mWord'), hint=$('#mHint'), res=$('#mRes'), steps=[$('#m1'),$('#m2'),$('#m3')];
+  function setStep(n){ step=n; steps.forEach((el,i)=>{ el.classList.toggle('act', i===n-1); el.classList.toggle('done', i<n-1 || n===4 && i<=2); }); }
+  function load(){
+    cur = order[idx % order.length]; idx++;
+    const [w,s] = cur;
+    mWord.innerHTML = `${strip(w)} <span style="font-size:.6em">❓</span>`;
+    $('#mSyls').innerHTML = s.map((x,k)=>`<button class="syl" data-k="${k}">${x}</button>`).join('');
+    $$('#mSyls .syl').forEach(b=>b.addEventListener('click',()=>s1(+b.dataset.k, b)));
+    $$('#mTypes .btn, #mEnd .btn').forEach(b=>b.classList.remove('good','bad'));
+    $('#m3t').innerHTML='3️⃣ ¿Termina en vocal, -n o -s?';
+    $('#m3').style.display='';
+    hint.textContent=''; res.hidden=true;
+    setStep(1);
+  }
+  function wrong(el, h){ el.classList.remove('bad'); void el.offsetWidth; el.classList.add('bad'); sfx.ko(); hint.innerHTML=h; }
+  function s1(k, b){
+    if(step!==1) return;
+    const [w,s,t]=cur;
+    if(k===t){ b.classList.add('tonic'); $$('#mSyls .syl').forEach(x=>x.disabled=true); sfx.ok(); hint.textContent=''; setStep(2); }
+    else wrong(b, '🤔 Esa no es la sílaba fuerte. Toca 🔊 y escucha otra vez.');
+  }
+  $$('#mTypes .btn').forEach(b=>b.addEventListener('click',()=>{
+    if(step!==2) return;
+    const [w,s,t]=cur, ty=typeOf(s.length,t);
+    if(b.dataset.k===ty){
+      b.classList.add('good'); sfx.ok(); hint.textContent='';
+      if(ty==='esdrujula'){ $('#m3').style.display='none'; finish(); }
+      else { const st=strip(w); $('#m3t').innerHTML=`3️⃣ Termina en «<span class="endl">${st.slice(-1)}</span>». ¿Es vocal, -n o -s?`; setStep(3); }
+    } else wrong(b, '🚂 Cuenta desde el final: ¿la tónica es la última, la penúltima o la antepenúltima?');
+  }));
+  $$('#mEnd .btn').forEach(b=>b.addEventListener('click',()=>{
+    if(step!==3) return;
+    const vns=/[aeiouns]$/.test(strip(cur[0]));
+    if((b.dataset.k==='si')===vns){ b.classList.add('good'); sfx.ok(); hint.textContent=''; finish(); }
+    else wrong(b, '🔍 Mira bien la última letra. Las vocales son a, e, i, o, u.');
+  }));
+  function finish(){
+    setStep(4);
+    const [w,s,t]=cur, ti=tildeIndex(w), ty=typeOf(s.length,t), st=strip(w), last=st.slice(-1);
+    const vns=/[aeiouns]$/.test(st);
+    let why;
+    if(ty==='esdrujula') why='Es <b>esdrújula</b>: lleva tilde <b>siempre</b>.';
+    else if(ty==='aguda') why = vns ? `Es <b>aguda</b> y termina en «${last}»: <b>lleva tilde</b>.` : `Es <b>aguda</b> y termina en «${last}»: <b>no lleva tilde</b>.`;
+    else why = vns ? `Es <b>llana</b> y termina en «${last}»: <b>no lleva tilde</b>.` : `Es <b>llana</b> y termina en «${last}»: <b>lleva tilde</b>.`;
+    mWord.innerHTML = ti<0 ? w : `${w.slice(0,ti)}<span class="acc">${w[ti]}</span>${w.slice(ti+1)}`;
+    res.hidden=false;
+    res.innerHTML = (ti<0 ? '🚫 ' : '✅ ') + why + ` Se escribe <b>${w}</b>.`;
+    sfx.star(); say(w);
+    solved++;
+    $('#mCount').textContent = `Palabras resueltas: ${solved}`;
+    if(solved===5) award('maquina');
+  }
+  $('#mNext').addEventListener('click', ()=>{ load(); sfx.click(); });
+  $('#mSay').addEventListener('click', ()=>say(cur[0]));
+  load();
+})();
+
+/* 5. Pon la tilde (reutilitzable) */
+function makeTildeGame(root, WORDS, {id, take=10}){
+  let list, i, score, answered, needed;
+  function start(){ list=shuffle(WORDS.slice()).slice(0,take); i=0; score=0; needed=Math.ceil(list.length*.6); show(); }
+  function show(){
+    answered=false;
+    const [w] = list[i], st=strip(w);
+    root.innerHTML = `<div class="qbar"><div style="width:${i/list.length*100}%"></div></div>
+      <div class="qcount">Palabra ${i+1} de ${list.length} · aciertos: ${score}</div>
+      <div class="row center"><button class="say">🔊 Escuchar</button></div>
+      <div class="letters">${[...st].map((ch,k)=>`<button class="lt${isVowel(ch)?' v':''}" data-k="${k}">${ch}</button>`).join('')}</div>
+      <div class="row center"><button class="btn ghost nol">🚫 No lleva tilde</button></div>
+      <div class="qfb" aria-live="polite"></div>
+      <button class="btn qnext" hidden>${i<list.length-1?'Siguiente palabra ▶':'Ver el resultado 🏁'}</button>`;
+    $('.say',root).addEventListener('click',()=>say(w));
+    $$('.lt',root).forEach(b=>b.addEventListener('click',()=>pick(+b.dataset.k, b)));
+    $('.nol',root).addEventListener('click',()=>pick(-1, $('.nol',root)));
+    $('.qnext',root).addEventListener('click',()=>{ i++; if(i<list.length) show(); else end(); });
+  }
+  function pick(k, b){
+    if(answered) return;
+    const [w,e]=list[i], ans=tildeIndex(w), st=strip(w);
+    if(k>=0 && !isVowel(st[k])){ $('.qfb',root).innerHTML='😉 Recuerda: las tildes solo se ponen sobre las <b>vocales</b>.'; b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad'); return; }
+    answered=true;
+    const ok = k===ans;
+    const lts=$$('.lt',root);
+    lts.forEach(x=>x.disabled=true); $('.nol',root).disabled=true;
+    if(ans>=0){ lts[ans].textContent = w[ans]; lts[ans].classList.add('okk'); }
+    else $('.nol',root).classList.add('good');
+    if(!ok) b.classList.add('bad');
+    if(ok){ score++; sfx.ok(); } else sfx.ko();
+    $('.qfb',root).innerHTML = (ok?'<b class="ok">✅ ¡Muy bien!</b> ':'<b class="ko">❌ ¡Casi!</b> ') + `Se escribe <b>${w}</b>. ${e}`;
+    $('.qcount',root).textContent = `Palabra ${i+1} de ${list.length} · aciertos: ${score}`;
+    $('.qnext',root).hidden=false;
+  }
+  function end(){
+    const ok=score>=needed, perfect=score===list.length;
+    root.innerHTML = `<div class="qend"><div class="emoji-big">${perfect?'🏆':ok?'🎉':'💪'}</div><h3>¡Has acertado ${score} de ${list.length}!</h3>
+      <p>${perfect?'¡Perfecto! ¡Ninguna tilde se te escapa!':ok?'¡Muy buen trabajo, detective!':`Necesitas ${needed} aciertos para la estrella. ¡Inténtalo otra vez!`}</p>
+      <button class="btn again">↺ Jugar otra vez</button></div>`;
+    $('.again',root).addEventListener('click',start);
+    if(ok) award(id); if(perfect) confetti();
+  }
+  start();
+}
+makeTildeGame($('#pt1'), [
+  ['árbol','ár-bol: llana que no termina en vocal, -n ni -s.'],
+  ['café','ca-fé: aguda terminada en vocal.'],
+  ['mesa','me-sa: llana terminada en vocal.'],
+  ['ratón','ra-tón: aguda terminada en -n.'],
+  ['pared','pa-red: aguda terminada en -d.'],
+  ['música','mú-si-ca: esdrújula, siempre con tilde.'],
+  ['lápiz','lá-piz: llana terminada en -z.'],
+  ['examen','e-xa-men: llana terminada en -n.'],
+  ['jardín','jar-dín: aguda terminada en -n.'],
+  ['reloj','re-loj: aguda terminada en -j.'],
+  ['pájaro','pá-ja-ro: esdrújula, siempre con tilde.'],
+  ['fácil','fá-cil: llana terminada en -l.'],
+  ['autobús','au-to-bús: aguda terminada en -s.'],
+  ['lunes','lu-nes: llana terminada en -s.'],
+  ['sábado','sá-ba-do: esdrújula, siempre con tilde.'],
+  ['feliz','fe-liz: aguda terminada en -z.'],
+  ['azúcar','a-zú-car: llana terminada en -r.'],
+  ['ventana','ven-ta-na: llana terminada en vocal.']
+], {id:'pontilde'});
+
+/* =====================================================
+   PARTE 2 · DIPTONGOS E HIATOS
+   ===================================================== */
+
+/* Laboratori de vocals */
+(function(){
+  const V=['a','e','i','o','u'], open=ch=>'aeo'.includes(ch);
+  const EX = {
+    ai:'aire, baile', au:'auto, jaula', ei:'peine, reina', eu:'Europa, deuda', oi:'oigo, boina', ou:'(muy poco frecuente)',
+    ia:'piano, lluvia', ie:'tierra, pie', io:'radio, canción', ua:'agua, cuando', ue:'huevo, fuego', uo:'antiguo, cuota',
+    iu:'ciudad, viuda', ui:'cuidado, ruido',
+    aiT:'maíz, país', auT:'baúl, aúlla', eiT:'reír, leído', euT:'reúne, reúno', oiT:'oído, oír', ouT:'(muy poco frecuente)',
+    iaT:'día, María', ieT:'ríe, sonríe', ioT:'río, tío', uaT:'grúa, actúa', ueT:'continúe, actúe', uoT:'dúo, búho',
+    ae:'caer, maestro', ao:'cacao, caos', ea:'pelea, línea', eo:'león, paseo', oa:'canoa, koala', oe:'poeta, héroe',
+    aa:'azahar', ee:'leer, creer', oo:'zoo, cooperar', ii:'chiita (muy poco frecuente)', uu:'(casi no existe)'
+  };
+  let v1='a', v2='i', ton=false; const seen=new Set();
+  function rows(){
+    ['#vr1','#vr2'].forEach((sel,r)=>{
+      $(sel).innerHTML = V.map(ch=>`<button class="vbtn ${open(ch)?'o':'c'}" data-v="${ch}" aria-label="vocal ${ch}">${ch}</button>`).join('');
+      $$(sel+' .vbtn').forEach(b=>b.addEventListener('click',()=>{ if(r===0) v1=b.dataset.v; else v2=b.dataset.v; sfx.click(); render(); }));
+    });
+  }
+  const vw=(ch,t)=>`<span class="vw ${open(ch)?'o':'c'}${t?' ton':''}">${t?ACC[ch]:ch}</span>`;
+  function render(){
+    $$('#vr1 .vbtn').forEach(b=>b.classList.toggle('sel', b.dataset.v===v1));
+    $$('#vr2 .vbtn').forEach(b=>b.classList.toggle('sel', b.dataset.v===v2));
+    const mixed = open(v1)!==open(v2);
+    const tq=$('#tonq'); tq.hidden=!mixed;
+    if(mixed){ const c=open(v1)?v2:v1; $('#tonqTxt').innerHTML=`¿La «<b>${c}</b>» suena fuerte (es la sílaba tónica)?`; }
+    $('#tonTgl').classList.toggle('on', ton); $('#tonTgl').setAttribute('aria-pressed', ton);
+    let kind, html, verd, key=v1+v2;
+    if(open(v1) && open(v2)){
+      kind='H'; html=`<div class="sbox">${vw(v1)}</div><span class="vsep">✋</span><div class="sbox">${vw(v2)}</div>`;
+      verd='✋ ¡Hiato! Dos vocales abiertas van en sílabas distintas.';
+    } else if(!open(v1) && !open(v2)){
+      if(v1===v2){ kind='H'; html=`<div class="sbox">${vw(v1)}</div><span class="vsep">✋</span><div class="sbox">${vw(v2)}</div>`; verd='✋ Hiato: dos vocales iguales se separan.'; }
+      else { kind='D'; html=`<div class="sbox">${vw(v1)}${vw(v2)}</div>`; verd='🤝 ¡Diptongo! Dos cerradas distintas van juntas.'; }
+    } else if(ton){
+      kind='H'; key+='T';
+      html=`<div class="sbox">${vw(v1,!open(v1))}</div><span class="vsep">✋</span><div class="sbox">${vw(v2,!open(v2))}</div>`;
+      verd='✋ ¡Hiato! La cerrada es tónica: se separan y la cerrada lleva tilde.';
+    } else {
+      kind='D'; html=`<div class="sbox">${vw(v1)}${vw(v2)}</div>`;
+      verd='🤝 ¡Diptongo! Abierta + cerrada átona van en la misma sílaba.';
+    }
+    $('#vres').innerHTML=html; $('#vverd').innerHTML=verd;
+    $('#vex').innerHTML = EX[key] ? `Ejemplos: ${EX[key]}` : '';
+    seen.add(kind); if(seen.size===2) award('vocales');
+  }
+  $('#tonTgl').addEventListener('click',()=>{ ton=!ton; sfx.click(); render(); });
+  rows(); render();
+
+  const D='🤝 Diptongo', H='✋ Hiato';
+  const d=(w,s)=>({v:W(w), q:'¿Diptongo o hiato?', o:[D,H], a:0, e:`<b>${s}</b>: las dos vocales van en la misma sílaba.`});
+  const h=(w,s)=>({v:W(w), q:'¿Diptongo o hiato?', o:[D,H], a:1, e:`<b>${s}</b>: las vocales van en sílabas distintas.`});
+  makeQuiz($('#dhQuiz'), [
+    d('piano','pia-no'), h('poeta','po-e-ta'), d('ciudad','ciu-dad'), h('día','dí-a'), d('huevo','hue-vo'),
+    h('león','le-ón'), d('aire','ai-re'), h('maíz','ma-íz'), d('cuidado','cui-da-do'), h('leer','le-er'),
+    d('jaula','jau-la'), h('río','rí-o'), h('baúl','ba-úl'), d('agua','a-gua'), h('oído','o-í-do'),
+    d('peine','pei-ne'), h('héroe','hé-ro-e'), d('lluvia','llu-via'), h('búho','bú-ho'), h('canoa','ca-no-a')
+  ], {id:'dh', shuffleQ:true, shuffleO:false, take:10});
+})();
+
+makeTildeGame($('#pt2'), [
+  ['día','dí-a: hiato con la i tónica, lleva tilde siempre.'],
+  ['río','rí-o: hiato con la i tónica, lleva tilde siempre.'],
+  ['maíz','ma-íz: hiato con la i tónica. ¡Lleva tilde aunque sea aguda en -z!'],
+  ['baúl','ba-úl: hiato con la u tónica. ¡Lleva tilde aunque sea aguda en -l!'],
+  ['canción','can-ción: diptongo «io»; aguda en -n, la tilde va en la vocal abierta.'],
+  ['después','des-pués: diptongo «ue»; aguda en -s, la tilde va en la vocal abierta.'],
+  ['león','le-ón: hiato de dos abiertas; aguda en -n.'],
+  ['poeta','po-e-ta: hiato de dos abiertas; llana en vocal, sin tilde.'],
+  ['héroe','hé-ro-e: esdrújula, siempre con tilde.'],
+  ['ciudad','ciu-dad: diptongo «iu»; aguda en -d, sin tilde.'],
+  ['oído','o-í-do: hiato con la i tónica, lleva tilde siempre.'],
+  ['búho','bú-ho: hiato (la h no cuenta), la u tónica lleva tilde.'],
+  ['país','pa-ís: hiato con la i tónica, lleva tilde siempre.'],
+  ['piano','pia-no: diptongo «ia»; llana en vocal, sin tilde.'],
+  ['murciélago','mur-cié-la-go: esdrújula con diptongo «ie»; la tilde va en la é.'],
+  ['reír','re-ír: hiato con la i tónica. ¡Lleva tilde aunque sea aguda en -r!']
+], {id:'tildedh'});
+
+/* =====================================================
+   PARTE 3 · TILDE DIACRÍTICA
+   ===================================================== */
+(function(){
+  const C = [
+    ['el','artículo','<b>El</b> perro ladra.','él','pronombre (una persona)','<b>Él</b> juega al fútbol.'],
+    ['tu','posesivo (de quién es)','Me gusta <b>tu</b> mochila.','tú','pronombre (una persona)','<b>Tú</b> cantas muy bien.'],
+    ['mi','posesivo (y nota musical)','Esta es <b>mi</b> casa.','mí','pronombre (una persona)','Este regalo es para <b>mí</b>.'],
+    ['te','pronombre','<b>Te</b> llamo luego.','té','bebida','Mi abuela toma <b>té</b>.'],
+    ['de','preposición','Un vaso <b>de</b> agua.','dé','verbo dar','Dile que te <b>dé</b> el libro.'],
+    ['se','pronombre','Marta <b>se</b> peina.','sé','verbo saber o ser','Ya <b>sé</b> nadar. ¡<b>Sé</b> amable!'],
+    ['si','condición','<b>Si</b> llueve, no saldremos.','sí','afirmación','¿Vienes? ¡<b>Sí</b>!'],
+    ['mas','significa «pero»','Quería ir, <b>mas</b> no pude.','más','cantidad','Quiero <b>más</b> sopa.']
+  ];
+  const box=$('#cards'); const flipped=new Set();
+  box.innerHTML = C.map((c,i)=>`<button class="fc" data-i="${i}" aria-label="Carta ${c[0]} y ${c[3]}">
+    <div class="fc-in">
+      <div class="fc-f"><b>${c[0]} · ${c[3]}</b><small>Toca para girar 🔄</small></div>
+      <div class="fc-b">
+        <div><span class="w n">${c[0]}</span> <small>sin tilde</small><br><b>${c[1]}</b><br>${c[2]}</div>
+        <div><span class="w">${c[3]}</span> <small>con tilde</small><br><b>${c[4]}</b><br>${c[5]}</div>
+      </div>
+    </div></button>`).join('');
+  $$('.fc',box).forEach(b=>b.addEventListener('click',()=>{
+    b.classList.toggle('flip'); sfx.click(); flipped.add(b.dataset.i);
+    $('#cardsMsg').textContent = flipped.size<C.length ? `Cartas descubiertas: ${flipped.size} de ${C.length}` : '🎉 ¡Has descubierto todas las parejas!';
+    if(flipped.size===C.length) award('cartas');
+  }));
+  $('#cardsMsg').textContent = `Cartas descubiertas: 0 de ${C.length}`;
+
+  const s=(sent,o,e)=>({s:sent.replace('_', GAP), o, a:0, e});
+  makeQuiz($('#diaQuiz'), [
+    s('_ hermano de Laura juega al baloncesto.',['El','Él'],'Va delante de un nombre (hermano): es un <b>artículo</b>, sin tilde.'),
+    s('Pregúntale a Marcos si _ viene a la excursión.',['él','el'],'Se refiere a una persona (Marcos): es un <b>pronombre</b>, con tilde.'),
+    s('¿Has traído _ estuche?',['tu','tú'],'Dice de quién es el estuche: <b>posesivo</b>, sin tilde.'),
+    s('¿Quieres venir _ también?',['tú','tu'],'Se refiere a una persona: <b>pronombre</b>, con tilde.'),
+    s('Esa canción me gusta mucho a _.',['mí','mi'],'Después de «a» o «para» y refiriéndose a una persona: <b>mí</b>, con tilde.'),
+    s('_ abuela hace unas galletas riquísimas.',['Mi','Mí'],'Dice de quién es: <b>posesivo</b>, sin tilde.'),
+    s('Por la tarde, mi tía toma un _ con limón.',['té','te'],'Es la <b>bebida</b>: con tilde.'),
+    s('Mañana _ llamo por teléfono.',['te','té'],'Es un <b>pronombre</b>: sin tilde.'),
+    s('Quiero un bocadillo _ queso.',['de','dé'],'Es una <b>preposición</b>: sin tilde.'),
+    s('Dile a Pablo que te _ la pelota.',['dé','de'],'Es del <b>verbo dar</b>: con tilde.'),
+    s('No _ la respuesta de este problema.',['sé','se'],'Es del <b>verbo saber</b> (yo sé): con tilde.'),
+    s('El gato _ esconde debajo de la cama.',['se','sé'],'Es un <b>pronombre</b>: sin tilde.'),
+    s('_ hace sol, iremos a la playa.',['Si','Sí'],'Expresa una <b>condición</b>: sin tilde.'),
+    s('¿Te gusta el chocolate? ¡_, mucho!',['Sí','Si'],'Es una <b>afirmación</b>: con tilde.'),
+    s('Tengo hambre: quiero _ macarrones.',['más','mas'],'Indica <b>cantidad</b>: con tilde.'),
+    s('¿_ hora es?',['Qué','Que'],'Es una <b>pregunta</b>: con tilde.'),
+    s('Me dijo _ vendría pronto.',['que','qué'],'No pregunta ni exclama: sin tilde.'),
+    s('¿_ se llama tu perro?',['Cómo','Como'],'Es una <b>pregunta</b>: con tilde.'),
+    s('Avísame _ llegues a casa.',['cuando','cuándo'],'No pregunta: sin tilde.'),
+    s('No sé _ he dejado las llaves.',['dónde','donde'],'Hay una <b>pregunta escondida</b> (¿dónde he dejado las llaves?): con tilde.')
+  ], {id:'diacritica', shuffleQ:true, take:12, intro:'Elige la palabra que falta:'});
+})();
+
+/* ---------- Reto final ---------- */
+makeQuiz($('#finalQuiz'), [
+  {v:W('ventana'), q:'¿Cuál es la sílaba tónica?', o:['ta','ven','na','No tiene'], a:0, e:'ven-<b>ta</b>-na: es una palabra llana.'},
+  {v:'´', q:'Las palabras agudas llevan tilde cuando terminan en…', o:['vocal, -n o -s','cualquier consonante','-l, -r o -z','nunca llevan tilde'], a:0, e:'Por ejemplo: sofá, camión, compás.'},
+  {v:W('lápiz'), q:'¿Qué tipo de palabra es?', o:['Llana','Aguda','Esdrújula','Sobresdrújula'], a:0, e:'<b>lá</b>-piz: la tónica es la penúltima.'},
+  {v:'🎵', q:'¿Qué palabras llevan tilde siempre?', o:['Las esdrújulas','Las agudas','Las llanas','Las de una sílaba'], a:0, e:'Música, pájaro, teléfono… ¡siempre!'},
+  {v:'🌳', q:'¿Cuál está bien escrita?', o:['árbol','arból','arbol','árból'], a:0, e:'Llana terminada en -l: ár-bol.'},
+  {v:'📝', q:'¿Cuál está bien escrita?', o:['examen','exámen','examén','éxamen'], a:0, e:'Llana terminada en -n: no lleva tilde.'},
+  {v:'🗣️', q:'¿Cuáles son las vocales abiertas?', o:['a, e, o','i, u','a, i, u','e, i, o'], a:0, e:'Las cerradas son la i y la u.'},
+  {v:W('piano'), q:'¿Qué tiene esta palabra?', o:['Un diptongo','Un hiato','Un triptongo','Ninguna vocal junta'], a:0, e:'pia-no: «ia» van en la misma sílaba.'},
+  {v:'🌽', q:'¿Por qué lleva tilde «maíz»?', o:['Porque es un hiato con la i tónica','Porque es aguda terminada en -z','Porque es esdrújula','No lleva tilde'], a:0, e:'ma-íz: la í tónica junto a una vocal abierta lleva tilde siempre.'},
+  {s:`Este dibujo es para ${GAP}.`, o:['mí','mi'], a:0, e:'Pronombre después de «para»: <b>mí</b>.'},
+  {s:`¿Dónde está ${GAP} gorra?`, o:['tu','tú'], a:0, e:'Dice de quién es la gorra: <b>tu</b>, posesivo.'},
+  {s:`¿${GAP} vas a venir a mi fiesta?`, o:['Cuándo','Cuando'], a:0, e:'Es una pregunta: <b>cuándo</b>.'}
+], {id:'reto', intro:'Elige la palabra que falta:'});
+
+/* ---------- Navegació activa ---------- */
+(function(){
+  const links=$$('#nav a');
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ const p=e.target.dataset.part; links.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+p)); }
+  }), {rootMargin:'-40% 0px -55% 0px'});
+  $$('[data-part]').forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>
