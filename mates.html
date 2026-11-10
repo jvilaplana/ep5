@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Matemàtiques de 5è · Dossier del Tram 1</title>
+<meta name="description" content="Pàgina interactiva de matemàtiques per a 5è: valor posicional, estimació, suma i resta, angles i temps.">
+<meta name="theme-color" content="#7CBDFF">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FDFDFB; --grid:#E2ECF8; --card:#FFFFFF; --soft:#F3F6FC;
+  --ink:#23264A; --muted:#62668A; --pen:#2F5BD3; --pink:#E8317F;
+  --hl:#FFE45C; --green:#2FA866; --red:#E5483F; --line:#23264A;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#191C31; --grid:#252A47; --card:#232845; --soft:#2B3152;
+    --ink:#F2F1FF; --muted:#A9ADCF; --pen:#8FB0FF; --pink:#FF7DB5;
+    --green:#4CD38A; --red:#FF7A72; --line:#8D93C4;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:18px;line-height:1.55;-webkit-tap-highlight-color:transparent;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+h1,h2,h3{font-family:"Baloo 2","Nunito",system-ui,sans-serif;line-height:1.1;margin:0 0 .4em;font-weight:800}
+h3{font-size:1.35rem}
+p{margin:.5em 0}
+b,strong{font-weight:900}
+a{color:var(--pen)}
+.wrap{max-width:1020px;margin:0 auto;padding:0 18px}
+:focus-visible{outline:4px solid var(--pen);outline-offset:3px;border-radius:10px}
+.hl{background:linear-gradient(transparent 50%,var(--hl) 50%,var(--hl) 92%,transparent 92%);padding:0 .12em}
+@media (prefers-color-scheme: dark){.hl{background:linear-gradient(transparent 50%,rgba(255,228,92,.35) 50%,rgba(255,228,92,.35) 92%,transparent 92%)}}
+.t-acc{color:var(--pink);font-weight:900}
+
+/* capçalera */
+header.top{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:2.5px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.topbar{display:flex;align-items:center;gap:10px;min-height:62px}
+.brand{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:1.3rem;text-decoration:none;color:var(--ink);flex:none;white-space:nowrap}
+.nav{display:flex;gap:8px;overflow-x:auto;flex:1;scrollbar-width:none;padding:6px 2px;-webkit-overflow-scrolling:touch}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:none;padding:7px 14px;border-radius:999px;border:2.5px solid var(--line);font-weight:900;text-decoration:none;color:var(--ink);background:var(--card);font-size:.95rem}
+.nav a.active{background:var(--c);color:#23264A}
+.stars{flex:none;font-weight:900;background:var(--hl);color:#23264A;border:2.5px solid #23264A;border-radius:999px;padding:5px 12px;white-space:nowrap}
+.stars.bump{animation:pop .6s}
+.iconbtn{flex:none;width:46px;height:46px;border-radius:50%;border:2.5px solid var(--line);background:var(--card);font-size:1.2rem;cursor:pointer;color:var(--ink)}
+@media (max-width:980px){.brand .txt{display:none}}
+@media (max-width:640px){.topbar{gap:6px}.nav a{padding:6px 11px}}
+
+/* portada */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;padding:40px 0 10px}
+.mascot{width:clamp(110px,18vw,160px);height:auto;animation:float 3.2s ease-in-out infinite}
+.hero h1{font-size:clamp(2.4rem,7vw,4.2rem);margin:0}
+.hero h1 .l1{display:block;font-size:.45em;color:var(--pen);font-weight:700}
+.bubble{background:var(--card);border:2.5px solid var(--line);border-radius:22px 22px 22px 6px;padding:14px 18px;margin-top:14px;font-size:1.1rem;max-width:60ch}
+.hero-word{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(3.4rem,15vw,7.5rem);line-height:1;text-align:center;margin:26px 0 4px;letter-spacing:.03em;cursor:pointer;user-select:none;-webkit-user-select:none}
+.hero-word .tv{position:relative;display:inline-block;color:var(--pink)}
+.hero-word .drop{position:absolute;left:52%;top:-.12em;width:.12em;height:.32em;background:var(--pink);border-radius:99px;transform:translateX(-30%) rotate(38deg);animation:tdrop 1s cubic-bezier(.3,1.5,.5,1) .7s both}
+.hero-cap{text-align:center;font-weight:900;font-size:1.15rem;color:var(--muted);margin:0 0 6px}
+@keyframes tdrop{0%{transform:translate(-30%,-2.2em) rotate(38deg);opacity:0}60%{opacity:1}100%{transform:translate(-30%,0) rotate(38deg);opacity:1}}
+.hero-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:22px 0 10px}
+.hcard{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:#23264A;background:var(--c);border:2.5px solid #23264A;border-radius:24px;padding:18px 20px;box-shadow:5px 6px 0 #23264A;transition:transform .12s}
+.hcard:active{transform:translate(3px,4px);box-shadow:2px 2px 0 #23264A}
+.hcard span{font-size:2.4rem;line-height:1}
+.hcard b{font-family:"Baloo 2",sans-serif;font-size:1.5rem}
+@media (max-width:560px){.hero{grid-template-columns:1fr;text-align:center;justify-items:center}.bubble{border-radius:22px}}
+
+/* blocs */
+.part{margin:60px 0 16px;padding:28px 24px 22px;border-radius:30px 30px 30px 8px;background:var(--c);color:#23264A;position:relative;overflow:hidden;border:2.5px solid #23264A;box-shadow:6px 7px 0 #23264A;scroll-margin-top:84px}
+.part h2{font-size:clamp(2.1rem,7vw,3.4rem);margin:0}
+.part p{margin:.2em 0 1em;font-weight:800;font-size:1.15rem;max-width:48ch}
+.part .deco{position:absolute;right:-6px;top:-14px;font-size:clamp(5rem,14vw,8rem);opacity:.35;transform:rotate(12deg);pointer-events:none;font-family:"Baloo 2",sans-serif;font-weight:800}
+.subnav{display:flex;flex-wrap:wrap;gap:8px;position:relative}
+.subnav a{background:rgba(255,255,255,.75);color:#23264A;text-decoration:none;font-weight:900;padding:7px 13px;border-radius:999px;font-size:.95rem;border:2px solid #23264A}
+.sec{margin:40px 0;scroll-margin-top:84px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.sec-head h2{font-size:clamp(1.7rem,5vw,2.4rem);margin:0}
+.sec-head h2 .t{background:linear-gradient(transparent 48%,var(--c) 48%,var(--c) 90%,transparent 90%);padding:0 .1em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.num{flex:none;width:50px;height:50px;border-radius:50%;background:var(--card);border:3px solid var(--line);display:grid;place-items:center;font-family:"Baloo 2",sans-serif;font-size:1.7rem;font-weight:800}
+.card{background:var(--card);border-radius:22px;padding:18px 20px;border:2.5px solid var(--line)}
+.card + .card,.card + .lab,.lab + .lab,.lab + .card,.grid + .lab,.grid2 + .lab,.grid + .key,.grid2 + .key,.card + .key,.lab + .key{margin-top:16px}
+.grid > *,.grid2 > *,.rules > *,.vtab > *,.links > *{margin-top:0 !important}
+.big{font-size:1.25rem}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.mini{background:var(--soft);border-radius:18px;padding:12px 14px;font-weight:700}
+.lab{background:var(--card);border:3px dashed var(--line);border-radius:26px;padding:18px 20px 20px}
+.lab-title{display:inline-flex;align-items:center;gap:6px;font-weight:900;background:var(--c);color:#23264A;padding:5px 14px;border-radius:999px;margin-bottom:8px;border:2px solid #23264A;font-size:1.05rem}
+.key{background:var(--hl);color:#23264A;border-radius:18px;padding:14px 18px;font-weight:800;border:2.5px solid #23264A;font-size:1.1rem}
+.tip{background:var(--soft);border-radius:18px;padding:12px 16px;margin-top:14px;border-left:6px solid var(--pen)}
+.msg{min-height:1.6em;font-weight:800;margin-top:12px;font-size:1.08rem}
+.ok{color:var(--green)}.ko{color:var(--red)}
+.center{justify-content:center;text-align:center}
+.ex{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:1.15em}
+.ex u{text-decoration:none;color:var(--pink);border-bottom:3px solid var(--pink)}
+
+/* botons */
+.btn{font:inherit;font-weight:900;border:2.5px solid #23264A;border-radius:16px;padding:10px 18px;min-height:50px;background:var(--c,var(--hl));color:#23264A;box-shadow:3px 4px 0 #23264A;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translate(2px,3px);box-shadow:1px 1px 0 #23264A}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:var(--card);color:var(--ink);border-color:var(--line);box-shadow:3px 4px 0 var(--line)}
+.btn.sel{background:var(--hl)}
+.btn.bad{animation:shake .4s}
+.btn.good{background:#2FA866;color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.22)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+@keyframes slidein{from{transform:translateX(-30px);opacity:0}to{transform:none;opacity:1}}
+@keyframes letterdrop{0%{transform:translateY(-.6em);opacity:0}60%{transform:translateY(.08em);opacity:1}100%{transform:none}}
+
+/* sílabes */
+.syls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 6px}
+.syl{font:inherit;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(1.7rem,6vw,2.5rem);min-width:76px;padding:6px 16px;border-radius:18px;border:3px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;touch-action:manipulation;line-height:1.2}
+.syl.tonic{background:var(--c);color:#23264A;border-color:#23264A;animation:pop .4s}
+.syl.bad{animation:shake .4s;background:rgba(229,72,63,.18)}
+.syl:disabled{cursor:default}
+.say{font:inherit;font-weight:900;border:2.5px solid var(--line);background:var(--soft);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;min-height:44px}
+
+/* tren */
+.typebtns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.train{display:flex;justify-content:center;gap:8px;align-items:flex-end;padding:18px 4px 46px;overflow-x:auto}
+.wagon{position:relative;min-width:80px;padding:12px 10px 16px;background:var(--card);border:3px solid var(--line);border-radius:14px;text-align:center;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(1.3rem,5vw,1.7rem);animation:slidein .45s both;animation-delay:calc(var(--i) * 90ms);flex:none}
+.wagon::before,.wagon::after{content:"";position:absolute;bottom:-13px;width:20px;height:20px;border-radius:50%;background:var(--ink);border:3px solid var(--paper)}
+.wagon::before{left:10px}.wagon::after{right:10px}
+.wagon small{position:absolute;top:calc(100% + 12px);left:-6px;right:-6px;font-size:.72rem;font-family:"Nunito",sans-serif;color:var(--muted);font-weight:900;line-height:1.1}
+.wagon.t{background:var(--c);color:#23264A;border-color:#23264A;box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--pink)}
+.wagon.t small{color:var(--pink)}
+.loco{font-size:2.6rem;flex:none;align-self:flex-end;margin-bottom:-6px}
+.rules{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:14px}
+.rule{background:var(--card);border:2.5px solid var(--line);border-radius:20px;padding:14px 16px}
+.rule h3{display:inline-block;padding:2px 12px;border-radius:99px;background:var(--rc);color:#23264A;border:2px solid #23264A;font-size:1.15rem}
+.rule .yes,.rule .no{display:block;margin-top:4px}
+
+/* màquina */
+.mach{display:grid;gap:12px}
+.mword{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(2.4rem,10vw,3.8rem);text-align:center;letter-spacing:.04em;line-height:1.2}
+.mword .acc{color:var(--pink);display:inline-block;animation:letterdrop .7s cubic-bezier(.3,1.5,.5,1)}
+.mstep{background:var(--soft);border-radius:18px;padding:12px 16px;opacity:.35;pointer-events:none;transition:opacity .3s}
+.mstep.act,.mstep.done{opacity:1;pointer-events:auto}
+.mstep.done{pointer-events:none}
+.mstep h4{margin:0 0 6px;font-size:1.05rem}
+.mstep .opts2{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.hint{color:var(--red);font-weight:800;min-height:1.4em;text-align:center;margin-top:6px}
+.endl{display:inline-block;color:var(--pink);border-bottom:4px solid var(--pink)}
+
+/* lletres */
+.letters{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0}
+.lt{font:inherit;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(1.6rem,7vw,2.4rem);width:clamp(42px,10vw,60px);height:clamp(54px,12vw,72px);border-radius:14px;border:3px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;touch-action:manipulation;padding:0;line-height:1}
+.lt.v{border-color:var(--pink)}
+.lt.okk{background:#2FA866;color:#fff;border-color:#1E7A48;animation:letterdrop .6s}
+.lt.bad{animation:shake .4s;background:rgba(229,72,63,.18)}
+.lt:disabled{cursor:default}
+
+/* qüestionaris */
+.quiz{background:var(--card);border-radius:22px;padding:18px 20px;border:2.5px solid var(--line);margin-top:12px}
+.qbar{height:12px;background:var(--soft);border-radius:99px;overflow:hidden;border:2px solid var(--line)}
+.qbar div{height:100%;background:var(--c,var(--hl));transition:width .4s}
+.qcount{font-size:.92rem;color:var(--muted);font-weight:800;margin:8px 0 2px}
+.qvis{font-size:3.4rem;text-align:center;line-height:1.15;margin-top:6px}
+.qword{font-family:"Baloo 2",sans-serif;font-size:clamp(2.2rem,8vw,3.4rem);font-weight:800;color:var(--ink);letter-spacing:.02em}
+.qtext{font-size:1.22rem;font-weight:900;text-align:center;margin:8px auto 14px;max-width:42ch}
+.qsent{font-size:clamp(1.25rem,4vw,1.55rem);font-weight:800;text-align:center;margin:12px auto 16px;max-width:36ch;line-height:1.5}
+.gap{display:inline-block;min-width:2.8em;border-bottom:4px solid var(--pen);color:var(--pen);text-align:center}
+.opts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.opt{font:inherit;font-weight:900;padding:12px 14px;border-radius:16px;border:2.5px solid var(--line);background:var(--soft);color:var(--ink);min-height:58px;cursor:pointer;touch-action:manipulation;font-size:1.1rem}
+.opt:active{transform:scale(.97)}
+.opt.right{background:#2FA866;border-color:#1E7A48;color:#fff;animation:pop .4s}
+.opt.wrong{background:#E5483F;border-color:#A8302A;color:#fff;animation:shake .4s}
+.opt:disabled{cursor:default}
+.opt:disabled:not(.right):not(.wrong){opacity:.5}
+.qfb{min-height:1.6em;margin:14px 0;text-align:center;font-size:1.05rem}
+.qnext{display:block;margin:0 auto}
+.qnext[hidden]{display:none}
+.qend{text-align:center}
+.emoji-big{font-size:4rem;line-height:1.2}
+
+/* vocals */
+.vtab{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.vbig{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.vw{width:72px;height:72px;border-radius:50%;display:inline-grid;place-items:center;font-family:"Baloo 2",sans-serif;font-size:2.6rem;font-weight:800;color:#23264A;border:3px solid #23264A;line-height:1;flex:none}
+.vw.o{background:#FFB37A}
+.vw.c{background:#9CCBFF;width:58px;height:58px;font-size:2.1rem}
+.vw.ton{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--pink)}
+.vlab{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;align-items:center;margin-top:8px}
+.vlab .lbl{font-weight:900}
+.vrow{display:flex;gap:8px;flex-wrap:wrap}
+.vbtn{width:58px;height:58px;border-radius:50%;font:inherit;font-family:"Baloo 2",sans-serif;font-size:1.9rem;font-weight:800;border:3px solid #23264A;cursor:pointer;color:#23264A;touch-action:manipulation;padding:0;line-height:1}
+.vbtn.o{background:#FFB37A}.vbtn.c{background:#9CCBFF}
+.vbtn.sel{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--pen);transform:scale(1.08)}
+.tonq{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px;background:var(--soft);padding:10px 14px;border-radius:16px;font-weight:800}
+.tonq[hidden]{display:none}
+.tgl{width:96px;height:52px;border-radius:99px;background:#C9CCDA;border:3px solid #23264A;position:relative;cursor:pointer;touch-action:manipulation;flex:none}
+.tgl::after{content:"";position:absolute;top:4px;left:5px;width:38px;height:38px;border-radius:50%;background:#fff;border:3px solid #23264A;transition:left .2s}
+.tgl.on{background:var(--pink)}
+.tgl.on::after{left:46px}
+.vres{display:flex;justify-content:center;align-items:center;gap:26px;margin:22px 0 8px;min-height:130px;flex-wrap:wrap}
+.sbox{display:flex;gap:6px;padding:12px 14px;border:3px dashed var(--line);border-radius:24px;animation:pop .45s;background:var(--card);align-items:center}
+.sbox small{display:block}
+.vsep{font-size:2.2rem;animation:pop .45s}
+.vverd{text-align:center;font-family:"Baloo 2",sans-serif;font-size:clamp(1.5rem,5vw,2rem);font-weight:800;margin:0}
+.vex{text-align:center;font-weight:800;color:var(--muted);margin:2px 0 0}
+
+/* cartes */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.fc{perspective:900px;height:220px;cursor:pointer;background:none;border:0;padding:0;font:inherit;color:inherit;width:100%;touch-action:manipulation}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.fc-f,.fc-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;border:2.5px solid var(--line);display:flex;flex-direction:column;justify-content:center;padding:14px 16px}
+.fc-f{background:var(--c);color:#23264A;align-items:center;text-align:center;border-color:#23264A;box-shadow:4px 5px 0 #23264A}
+.fc-f b{font-family:"Baloo 2",sans-serif;font-size:2.2rem;line-height:1.1;white-space:nowrap}
+.fc-f small{font-weight:900;opacity:.75}
+.fc-b{background:var(--card);transform:rotateY(180deg);text-align:left;font-size:.95rem;gap:8px}
+.fc-b .w{font-family:"Baloo 2",sans-serif;font-size:1.45rem;font-weight:800;color:var(--pink)}
+.fc-b .w.n{color:var(--pen)}
+.qw{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.qw span{background:var(--c);color:#23264A;border:2px solid #23264A;border-radius:99px;padding:5px 14px;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.3rem}
+
+/* enllaços */
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.lgroup h3{margin-bottom:8px}
+.lgroup a{display:flex;align-items:center;gap:10px;background:var(--soft);border:2.5px solid var(--line);border-radius:16px;padding:10px 14px;margin:8px 0;text-decoration:none;color:var(--ink);font-weight:800;min-height:52px}
+.lgroup a:active{transform:scale(.98)}
+.lgroup a span{margin-left:auto;color:var(--muted);font-size:.85rem}
+.starlist{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.starlist li{padding:6px 10px;border-radius:12px;background:var(--soft);font-weight:800;opacity:.6}
+.starlist li.got{opacity:1;background:var(--hl);color:#23264A}
+
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translate(-50%,180%);background:#23264A;color:#fff;padding:12px 22px;border-radius:99px;font-weight:900;z-index:100;transition:transform .4s cubic-bezier(.3,1.4,.5,1);max-width:92vw;text-align:center;border:3px solid var(--hl)}
+#toast.show{transform:translate(-50%,0)}
+.conf{position:fixed;top:-50px;font-size:1.9rem;z-index:99;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(720deg)}}
+.foot{text-align:center;color:var(--muted);padding:30px 0 70px;font-size:.95rem;font-weight:700}
+@media (prefers-reduced-motion: reduce){.mascot{animation:none}}
+
+.warn{background:rgba(229,72,63,.12);border-left-color:var(--red)}
+/* portada: comptador */
+.slotnum{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(3rem,12vw,6.2rem);line-height:1.1;margin:22px 0 0;cursor:pointer;user-select:none;-webkit-user-select:none;display:flex;justify-content:center;align-items:flex-start}
+.slotcol{display:flex;flex-direction:column;align-items:center}
+.slot{display:block;height:1.1em;overflow:hidden}
+.reel{display:flex;flex-direction:column;transition:transform 1.4s cubic-bezier(.2,.9,.3,1.04)}
+.reel span{height:1.1em;display:block;text-align:center}
+.slotcol small{font-family:"Nunito",sans-serif;font-size:clamp(.7rem,2.2vw,1rem);font-weight:900;color:var(--muted);opacity:0;transition:opacity .5s .3s}
+.slotnum.shown .slotcol small{opacity:1}
+.slotcol.k .slot{color:var(--pen)}
+.slotwords{text-align:center;font-weight:900;font-size:1.15rem;min-height:1.6em;margin:6px 0 0}
+/* taula de valors */
+.pvg{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:640px;margin:10px auto 4px;text-align:center;font-weight:900;font-size:.95rem}
+.pvg span{border-radius:99px;padding:3px;border:2px solid var(--line)}
+.pvg span:first-child{background:rgba(124,189,255,.25)}.pvg span:last-child{background:rgba(255,201,60,.28)}
+.pv{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;max-width:640px;margin:0 auto}
+.pvc{border:2.5px solid var(--line);border-radius:18px;overflow:hidden;text-align:center;background:var(--card)}
+.pvc.k{background:rgba(124,189,255,.16)}.pvc.u{background:rgba(255,201,60,.18)}
+.pvh{font-weight:900;font-size:1.1rem;padding:6px 0 0;line-height:1.1}
+.pvh small{display:block;font-size:.62rem;color:var(--muted);line-height:1.15;min-height:2.4em;padding:2px 2px 0}
+.pvd{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(2rem,7vw,3rem);line-height:1.25}
+.pvd.pop{animation:pop .3s}
+.pvb{display:block;width:100%;min-height:48px;border:0;background:rgba(127,127,160,.12);font-size:1.5rem;cursor:pointer;color:var(--ink);touch-action:manipulation}
+.pvb:active{background:var(--soft)}
+.readout{text-align:center;margin-top:12px}
+.bignum{font-family:"Baloo 2",sans-serif;font-size:clamp(2.6rem,10vw,3.8rem);font-weight:800;line-height:1.1}
+.words{font-weight:900;color:var(--pen);font-size:1.15rem}
+.decomp{color:var(--muted);font-weight:800}
+.facts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px}
+.facts span{background:var(--soft);border-radius:99px;padding:4px 12px;font-weight:800;font-size:.95rem}
+.chalbtns{display:flex;flex-wrap:wrap;gap:8px}
+.chalbtns .btn.done::after{content:" ✅"}
+.chaltxt{background:var(--soft);border-radius:16px;padding:12px 16px;font-weight:800;margin-top:10px;font-size:1.1rem}
+/* recta numèrica */
+.nlsvg{width:100%;max-width:640px;display:block;margin:6px auto;overflow:visible}
+.nl-line{stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+.nl-tick{stroke:var(--ink);stroke-width:2}
+.svgt{fill:var(--ink);font-weight:900;font-family:"Nunito",system-ui,sans-serif}
+.svgm{fill:var(--muted);font-weight:800;font-family:"Nunito",system-ui,sans-serif}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:drawp .6s ease forwards;animation-delay:var(--dl,0s)}
+@keyframes drawp{to{stroke-dashoffset:0}}
+.fadein{opacity:0;animation:fadein .4s forwards;animation-delay:var(--dl,0s)}
+@keyframes fadein{to{opacity:1}}
+/* operacions per escrit */
+.wop{display:grid;justify-content:center;gap:4px;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(1.8rem,7vw,2.4rem);margin:10px auto}
+.wc{width:clamp(40px,10vw,54px);height:clamp(46px,11vw,58px);display:grid;place-items:center;line-height:1}
+.wc.carry{height:26px;font-size:1rem;color:var(--red);font-family:"Nunito",sans-serif;font-weight:900;visibility:hidden}
+.wop.showc .wc.carry{visibility:visible}
+.wc.line{border-bottom:4px solid var(--ink)}
+.dig{width:100%;height:100%;font:inherit;text-align:center;border:3px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);padding:0}
+.dig.ok{border-color:#2FA866;background:rgba(47,168,102,.15)}
+.dig.ko{border-color:#E5483F;background:rgba(229,72,63,.15);animation:shake .4s}
+/* compensació */
+.eq{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(1.8rem,7vw,2.6rem);text-align:center;margin:4px 0}
+.complog{list-style:none;padding:0;margin:8px 0 0;max-height:230px;overflow:auto}
+.complog li{padding:6px 12px;border-radius:12px;background:var(--soft);margin:4px 0;font-weight:800}
+/* angles */
+.prot{fill:rgba(124,189,255,.13);stroke:var(--ink);stroke-width:2}
+.ptick{stroke:var(--ink);stroke-width:1.4}
+.plab{fill:var(--ink);font-size:11px;font-weight:900;font-family:"Nunito",sans-serif}
+.plab2{fill:var(--muted);font-size:9.5px;font-weight:800;font-family:"Nunito",sans-serif}
+.ray{stroke:var(--ink);stroke-width:5;stroke-linecap:round}
+.handle{fill:#FF5DA2;stroke:#23264A;stroke-width:3;cursor:grab}
+.angbig{font-family:"Baloo 2",sans-serif;font-size:clamp(1.9rem,7vw,2.7rem);font-weight:800;text-align:center;margin:0}
+.touchnone{touch-action:none;-webkit-user-select:none;user-select:none}
+.angmini{width:100%;max-width:200px;display:block;margin:4px auto}
+/* temps */
+.tin{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:center}
+.tin label{font-weight:900;display:flex;flex-direction:column;gap:4px;align-items:center}
+input[type=time],input.num{font:inherit;font-size:1.4rem;font-weight:800;padding:8px 12px;border:2.5px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);min-height:54px}
+input.num{width:120px;text-align:center}
+.pies{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
+.pie{width:64px;height:64px;border-radius:50%;border:3px solid #23264A;background:conic-gradient(#C3ADFF 0 var(--p),var(--soft) var(--p) 100%);position:relative}
+.pie b{position:absolute;inset:0;display:grid;place-items:center;font-size:.8rem;color:#23264A}
+.clock{width:190px;height:222px;display:block;margin:0 auto}
+.tm-layout{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+@media (max-width:700px){.tm-layout{grid-template-columns:1fr}}
+.timeres{font-family:"Baloo 2",sans-serif;font-size:clamp(1.6rem,6vw,2.3rem);font-weight:800;text-align:center;margin:6px 0}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="#inici">📐<span class="txt"> Matemàtiques de 5è</span></a>
+    <nav class="nav" id="nav" aria-label="Apartats">
+      <a href="#nombres" style="--c:#7CBDFF">🔢 Nombres</a>
+      <a href="#estimacio" style="--c:#FFC93C">🎯 Estimació</a>
+      <a href="#sumaresta" style="--c:#8FE3A8">➕ Suma i resta</a>
+      <a href="#angles" style="--c:#FF9EC4">📐 Angles</a>
+      <a href="#temps" style="--c:#C3ADFF">⏰ Temps</a>
+      <a href="#repte" style="--c:#FFB37A">🏆 Repte</a>
+    </nav>
+    <button class="iconbtn" id="sndBtn" aria-label="Activa o desactiva el so">🔊</button>
+    <div class="stars" id="stars" aria-live="polite" title="Estrelles aconseguides">⭐ <span id="starCount">0</span>/<span id="starTotal">12</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= PORTADA ================= -->
+<section id="inici" data-part="inici">
+  <div class="hero">
+    <svg class="mascot" viewBox="0 0 130 160" aria-hidden="true">
+      <rect x="12" y="10" width="106" height="140" rx="22" fill="#7CBDFF" stroke="#23264A" stroke-width="5"/>
+      <rect x="26" y="24" width="78" height="46" rx="10" fill="#E8F7FF" stroke="#23264A" stroke-width="4"/>
+      <circle cx="50" cy="44" r="5" fill="#23264A"/><circle cx="80" cy="44" r="5" fill="#23264A"/>
+      <path d="M52 56 Q65 64 78 56" stroke="#23264A" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g fill="#FFE45C" stroke="#23264A" stroke-width="3"><rect x="26" y="84" width="20" height="18" rx="5"/><rect x="55" y="84" width="20" height="18" rx="5"/><rect x="84" y="84" width="20" height="18" rx="5" fill="#FF9EC4"/>
+      <rect x="26" y="112" width="20" height="18" rx="5"/><rect x="55" y="112" width="20" height="18" rx="5"/><rect x="84" y="112" width="20" height="18" rx="5" fill="#8FE3A8"/></g>
+    </svg>
+    <div>
+      <h1><span class="l1">Dossier d’estudi · Tram 1</span>Matemàtiques de 5è</h1>
+      <div class="bubble">Hola! Sóc la <b>Calcu</b> 🧮. Repassarem els nombres, l’estimació, la suma i la resta, els angles i el temps. Fes els experiments i els jocs: cada repte superat et dona una <b>⭐</b>. Les aconseguiràs totes?</div>
+    </div>
+  </div>
+  <div class="slotnum" id="slot" role="button" tabindex="0" aria-label="Toca per fer sortir un altre nombre"></div>
+  <p class="slotwords" id="slotWords" aria-live="polite"></p>
+  <p class="hero-cap">Toca el nombre per fer-ne sortir un altre!</p>
+  <div class="hero-cards">
+    <a class="hcard" href="#nombres" style="--c:#7CBDFF"><span>🔢</span><b>Nombres</b><small>Valor posicional</small></a>
+    <a class="hcard" href="#estimacio" style="--c:#FFC93C"><span>🎯</span><b>Estimació</b><small>Arrodonir i aproximar</small></a>
+    <a class="hcard" href="#sumaresta" style="--c:#8FE3A8"><span>➕</span><b>Suma i resta</b><small>Deduir i calcular</small></a>
+    <a class="hcard" href="#angles" style="--c:#FF9EC4"><span>📐</span><b>Angles</b><small>Mesurar i classificar</small></a>
+    <a class="hcard" href="#temps" style="--c:#C3ADFF"><span>⏰</span><b>Temps</b><small>Hores i minuts</small></a>
+  </div>
+</section>
+
+<!-- ================= NOMBRES ================= -->
+<div class="part" id="nombres" data-part="nombres" style="--c:#7CBDFF">
+  <span class="deco" aria-hidden="true">123</span>
+  <h2>Sistema decimal posicional</h2>
+  <p>Amb només deu xifres podem escriure qualsevol nombre. El secret? El lloc on posem cada xifra!</p>
+  <nav class="subnav"><a href="#n1">1. El valor de cada xifra</a><a href="#n2">2. Reptes de nombres</a><a href="#n3">3. Llegir i escriure nombres</a></nav>
+</div>
+
+<section class="sec" id="n1" data-part="nombres" style="--c:#7CBDFF">
+  <div class="sec-head"><div class="num">1</div><h2><span class="t">El valor de cada xifra</span></h2></div>
+  <div class="card">
+    <p class="big">El valor d’una xifra <span class="hl">depèn del lloc que ocupa</span>. Cada lloc val <b>10 vegades més</b> que el de la seva dreta.</p>
+    <p>10 unitats = 1 desena · 10 desenes = 1 centena · 10 centenes = 1 unitat de miler…</p>
+    <p class="ex">En el nombre <b>152.842</b>, el 5 val <b>50.000</b> (5 desenes de miler) i el 4 val <b>40</b> (4 desenes).</p>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🧪 Experimenta: la taula de valors</div>
+    <p>Toca ▲ i ▼ per canviar cada xifra. Mira com canvia el nombre, la descomposició i com s’escriu.</p>
+    <div class="pvg"><span>Milers</span><span>Unitats</span></div>
+    <div class="pv" id="pv"></div>
+    <div class="readout">
+      <div class="bignum" id="pvNum">0</div>
+      <div class="words" id="pvWords"></div>
+      <div class="decomp" id="pvDec"></div>
+      <div class="facts" id="pvFacts"></div>
+    </div>
+    <div class="row center"><button class="btn ghost" id="pvZero">↺ Posa-ho tot a zero</button></div>
+  </div>
+</section>
+
+<section class="sec" id="n2" data-part="nombres" style="--c:#7CBDFF">
+  <div class="sec-head"><div class="num">2</div><h2><span class="t">Reptes de nombres</span></h2></div>
+  <div class="grid2">
+    <div class="card"><h3>⬆️ El més gran</h3><p>Posa les xifres <b>més grans a l’esquerra</b>, on valen més. Els zeros, tan a la dreta com puguis.</p></div>
+    <div class="card"><h3>⬇️ El més petit</h3><p>La primera xifra, la <b>més petita possible</b> (però no pot ser 0!). Després, zeros. Les xifres grans, <b>al final</b>.</p></div>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🎯 Construeix el nombre</div>
+    <p>Tria un repte i fes-lo amb la taula de valors de sota. Quan el tinguis, toca <b>Comprova</b>.</p>
+    <div class="chalbtns" id="chalBtns"></div>
+    <div class="chaltxt" id="chalTxt"></div>
+    <div class="pvg"><span>Milers</span><span>Unitats</span></div>
+    <div class="pv" id="pv2"></div>
+    <div class="readout"><div class="bignum" id="pv2Num">0</div><div class="facts" id="pv2Facts"></div></div>
+    <div class="row center"><button class="btn" id="chalCheck">✔ Comprova</button><button class="btn ghost" id="chalZero">↺ Esborra</button></div>
+    <p class="msg center" id="chalMsg" aria-live="polite"></p>
+  </div>
+</section>
+
+<section class="sec" id="n3" data-part="nombres" style="--c:#7CBDFF">
+  <div class="sec-head"><div class="num">3</div><h2><span class="t">Llegir i escriure nombres</span></h2></div>
+  <div class="card">
+    <ul>
+      <li>Els milers se separen amb un <b>punt</b>: <span class="ex">152.842</span></li>
+      <li>Desenes i unitats van amb <b>guionet</b>: <span class="ex">quaranta-dos</span>. Del 21 al 29, amb <b>-i-</b>: <span class="ex">vint-i-dos</span></li>
+      <li>Les centenes també porten guionet: <span class="ex">vuit-cents</span> (però <span class="ex">cent</span> va sol)</li>
+      <li><span class="ex">mil</span> va sempre separat: <span class="ex">dos mil</span>, <span class="ex">cent cinquanta-dos mil</span></li>
+    </ul>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🎯 Joc: quin valor té la xifra?</div>
+    <div class="quiz" id="valorQuiz"></div>
+  </div>
+</section>
+
+<!-- ================= ESTIMACIÓ ================= -->
+<div class="part" id="estimacio" data-part="estimacio" style="--c:#FFC93C">
+  <span class="deco" aria-hidden="true">≈</span>
+  <h2>Estimació</h2>
+  <p>Estimar vol dir calcular un resultat aproximat. Arrodonim els nombres per facilitar els càlculs.</p>
+  <nav class="subnav"><a href="#e1">1. Arrodonir</a><a href="#e2">2. Estimar</a></nav>
+</div>
+
+<section class="sec" id="e1" data-part="estimacio" style="--c:#FFC93C">
+  <div class="sec-head"><div class="num">1</div><h2><span class="t">Arrodonir</span></h2></div>
+  <div class="card">
+    <p class="big">Per arrodonir, mira la <b>xifra de la dreta</b> del lloc on vols arrodonir:</p>
+    <div class="grid2">
+      <div class="mini">⬇️ Si és <b>0, 1, 2, 3 o 4</b>, arrodoneix <b>cap avall</b>.<br><span class="ex">2.6<u>3</u>8 → 2.600</span></div>
+      <div class="mini">⬆️ Si és <b>5, 6, 7, 8 o 9</b>, arrodoneix <b>cap amunt</b>.<br><span class="ex">2.2<u>7</u>1 → 2.300</span></div>
+    </div>
+    <div class="tip">🔍 Per arrodonir a les <b>centenes</b>, mira les <b>desenes</b>. Per arrodonir als <b>milers</b>, mira les <b>centenes</b>. És com preguntar: «a quina centena estic més a prop?»</div>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🎯 Joc: cap a on arrodoneixo?</div>
+    <p id="rdLevel" class="msg center" style="margin-top:0"></p>
+    <svg class="nlsvg" id="rdSvg" viewBox="0 0 600 150" role="img" aria-label="Recta numèrica per arrodonir"></svg>
+    <div class="row center" id="rdBtns"></div>
+    <p class="msg center" id="rdMsg" aria-live="polite"></p>
+    <div class="row center"><button class="btn" id="rdNext" hidden>Següent ▶</button><span class="msg" id="rdCount" style="margin:0"></span></div>
+  </div>
+</section>
+
+<section class="sec" id="e2" data-part="estimacio" style="--c:#FFC93C">
+  <div class="sec-head"><div class="num">2</div><h2><span class="t">Estimar abans de calcular</span></h2></div>
+  <div class="card">
+    <p>Una estimació et diu <b>més o menys quin resultat has d’obtenir</b>. Així, quan facis el càlcul exacte, podràs veure de seguida si t’has equivocat.</p>
+    <p class="ex">1.438 + 2.271 + 684 ≈ 1.400 + 2.300 + 700 = <b>4.400</b></p>
+    <div class="tip">✋ Si el resultat exacte surt molt lluny de la teva estimació (per exemple 9.400 en lloc de 4.400), revisa el càlcul!</div>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🎯 Joc: estima sense calcular</div>
+    <div class="quiz" id="estQuiz"></div>
+  </div>
+</section>
+
+<!-- ================= SUMA I RESTA ================= -->
+<div class="part" id="sumaresta" data-part="sumaresta" style="--c:#8FE3A8">
+  <span class="deco" aria-hidden="true">+ −</span>
+  <h2>Suma i resta</h2>
+  <p>De vegades no cal tornar a fer tot el càlcul: n’hi ha prou de pensar què ha canviat!</p>
+  <nav class="subnav"><a href="#s1">1. Deduir resultats</a><a href="#s2">2. Calcular per escrit</a></nav>
+</div>
+
+<section class="sec" id="s1" data-part="sumaresta" style="--c:#8FE3A8">
+  <div class="sec-head"><div class="num">1</div><h2><span class="t">Deduir resultats</span></h2></div>
+  <div class="grid">
+    <div class="card"><h3>➕ En una suma</h3><p>Si un sumand té <b>3.000 menys</b>, el resultat també té <b>3.000 menys</b>.</p><p class="ex">3.568 + 427 = 3.995<br>568 + 427 = <b>995</b></p></div>
+    <div class="card"><h3>➖ Si restes més…</h3><p>Si el nombre que restes és <b>20 més gran</b>, el resultat és <b>20 més petit</b>.</p><p class="ex">4.275 − 1.326 = 2.949<br>4.275 − 1.346 = <b>2.929</b></p></div>
+    <div class="card"><h3>⚖️ Si canvies els dos</h3><p>Si sumes <b>el mateix</b> als dos nombres d’una resta, el resultat <b>no canvia</b>.</p><p class="ex">1.402 − 596 = 806<br>1.406 − 600 = <b>806</b></p></div>
+  </div>
+  <div class="lab">
+    <div class="lab-title">⚖️ Experimenta: la resta és una distància</div>
+    <p>Una resta és la <b>distància</b> entre dos nombres. Si mous els dos alhora, la distància no canvia! Prova els botons.</p>
+    <div class="eq" id="cmpEq"></div>
+    <svg class="nlsvg" id="cmpSvg" viewBox="0 0 600 130" role="img" aria-label="Recta numèrica amb la distància de la resta"></svg>
+    <div class="row center">
+      <button class="btn" id="cmpRound">🎯 Fes rodó el que restes</button>
+      <button class="btn" data-a="both" data-v="100">+100 als dos</button>
+      <button class="btn" data-a="both" data-v="-100">−100 als dos</button>
+      <button class="btn" data-a="sub" data-v="100">+100 només al que restes</button>
+      <button class="btn" data-a="min" data-v="100">+100 només al primer</button>
+      <button class="btn ghost" id="cmpReset">↺ Torna a començar</button>
+    </div>
+    <ul class="complog" id="cmpLog" aria-live="polite"></ul>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🎯 Joc: dedueix el resultat</div>
+    <div class="quiz" id="dedQuiz"></div>
+  </div>
+</section>
+
+<section class="sec" id="s2" data-part="sumaresta" style="--c:#8FE3A8">
+  <div class="sec-head"><div class="num">2</div><h2><span class="t">Calcular per escrit</span></h2></div>
+  <div class="card">
+    <p>Col·loca bé les xifres: <b>unitats sota unitats</b>, desenes sota desenes… i comença sempre <b>per la dreta</b>. No t’oblidis de les que te’n portes!</p>
+    <p>Abans de començar, fes una <b>estimació</b> per saber si el resultat té sentit.</p>
+  </div>
+  <div class="lab">
+    <div class="lab-title">✍️ Fes-ho per escrit</div>
+    <p>Escriu el resultat xifra a xifra, començant per la dreta. Si t’encalles, toca <b>Mostra les que me’n porto</b>.</p>
+    <p class="msg center" id="wEst" style="margin-top:0"></p>
+    <div class="wop" id="wop"></div>
+    <div class="row center"><button class="btn" id="wCheck">✔ Comprova</button><button class="btn ghost" id="wHelp">💡 Mostra les que me’n porto</button><button class="btn ghost" id="wNew">Nova operació ▶</button></div>
+    <p class="msg center" id="wMsg" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- ================= ANGLES ================= -->
+<div class="part" id="angles" data-part="angles" style="--c:#FF9EC4">
+  <span class="deco" aria-hidden="true">∠</span>
+  <h2>Angles</h2>
+  <p>Un angle és l’obertura entre dues línies que surten d’un mateix punt, el vèrtex. Es mesura en graus (°).</p>
+  <nav class="subnav"><a href="#g1">1. Tipus d’angles</a><a href="#g2">2. El transportador</a></nav>
+</div>
+
+<section class="sec" id="g1" data-part="angles" style="--c:#FF9EC4">
+  <div class="sec-head"><div class="num">1</div><h2><span class="t">Tipus d’angles</span></h2></div>
+  <div class="grid" id="angTypes"></div>
+  <div class="lab">
+    <div class="lab-title">🧪 Experimenta: obre i tanca l’angle</div>
+    <p>Arrossega el punt rosa (o mou el control) i mira com canvia l’angle.</p>
+    <p class="angbig" id="tpOut" aria-live="polite"></p>
+    <svg class="svgbox touchnone" id="tpSvg" viewBox="0 0 420 240" role="img" aria-label="Transportador amb un angle que es pot moure" style="max-width:600px"></svg>
+    <input type="range" id="tpRange" min="0" max="180" value="55" aria-label="Obertura de l’angle">
+    <div class="row center"><button class="btn small" data-a="45">45°</button><button class="btn small" data-a="90">90°</button><button class="btn small" data-a="135">135°</button><button class="btn small" data-a="180">180°</button></div>
+  </div>
+</section>
+
+<section class="sec" id="g2" data-part="angles" style="--c:#FF9EC4">
+  <div class="sec-head"><div class="num">2</div><h2><span class="t">Mesurar amb el transportador</span></h2></div>
+  <div class="card">
+    <ol>
+      <li>Posa el <b>centre</b> del transportador just al <b>vèrtex</b> de l’angle.</li>
+      <li>Fes coincidir la línia del <b>0</b> amb un dels costats de l’angle.</li>
+      <li>Mira on passa l’altre costat. Compta <b>des del 0 del costat on comences</b>: el transportador té dues escales!</li>
+    </ol>
+    <div class="tip">⚠️ <b>Error típic:</b> llegir l’escala que no toca. Un angle agut no pot fer 130°! Primer mira si és més petit o més gran que un angle recte.</div>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🎯 Joc: mesura i classifica</div>
+    <div id="mgCount" class="qcount"></div>
+    <svg class="svgbox" id="mgSvg" viewBox="0 0 420 240" role="img" aria-label="Angle per mesurar" style="max-width:600px"></svg>
+    <p class="qtext" id="mgQ">Quant mesura aquest angle?</p>
+    <div class="opts" id="mgOpts"></div>
+    <p class="qtext" id="mgQ2" style="margin-top:16px">I quin tipus d’angle és?</p>
+    <div class="opts" id="mgTypes"><button class="opt" data-t="agut">Agut</button><button class="opt" data-t="recte">Recte</button><button class="opt" data-t="obtus">Obtús</button></div>
+    <div class="qfb" id="mgFb" aria-live="polite"></div>
+    <button class="btn qnext" id="mgNext" hidden>Següent angle ▶</button>
+  </div>
+</section>
+
+<!-- ================= TEMPS ================= -->
+<div class="part" id="temps" data-part="temps" style="--c:#C3ADFF">
+  <span class="deco" aria-hidden="true">⏰</span>
+  <h2>El temps</h2>
+  <p>Una hora té 60 minuts, no 100! Per això, amb les hores cal anar amb compte.</p>
+  <nav class="subnav"><a href="#t1">1. Hores i minuts</a><a href="#t2">2. Quant temps passa?</a><a href="#t3">3. A quina hora acaba?</a></nav>
+</div>
+
+<section class="sec" id="t1" data-part="temps" style="--c:#C3ADFF">
+  <div class="sec-head"><div class="num">1</div><h2><span class="t">Hores i minuts</span></h2></div>
+  <div class="grid">
+    <div class="mini"><b>1 hora = 60 minuts</b><br>mitja hora = 30 min<br>un quart = 15 min<br>tres quarts = 45 min</div>
+    <div class="mini"><b>10.38 h</b> vol dir <b>10 hores i 38 minuts</b>. Els minuts van del 00 al 59: després del 10.59 ve el <b>11.00</b>.</div>
+  </div>
+  <div class="tip warn">⚠️ <b>Compte!</b> Les hores <b>no</b> es resten com els nombres decimals. 18.19 − 16.47 <b>no</b> és 1,72: una hora té 60 minuts, no 100. Fes-ho amb <b>salts</b>: 16.47 → 17.00 (13 min) → 18.00 (1 h) → 18.19 (19 min) = <b>1 h 32 min</b>.</div>
+  <div class="lab">
+    <div class="lab-title">🔄 Converteix minuts en hores</div>
+    <p>Mou el control. Cada cercle ple és una hora sencera.</p>
+    <p class="timeres" id="cvOut"></p>
+    <div class="pies" id="cvPies"></div>
+    <input type="range" id="cvRange" min="0" max="300" value="85" aria-label="Minuts">
+    <div class="tip">Per passar minuts a hores, <b>treu grups de 60</b>: 85 min = 60 + 25 → <b>1 h 25 min</b>.</div>
+  </div>
+</section>
+
+<section class="sec" id="t2" data-part="temps" style="--c:#C3ADFF">
+  <div class="sec-head"><div class="num">2</div><h2><span class="t">Quant temps passa?</span></h2></div>
+  <div class="lab">
+    <div class="lab-title">🦘 Els salts del rellotge</div>
+    <p>Tria l’hora en què comença i en què acaba. Farem salts: primer fins a l’hora en punt, després hores senceres i, al final, els minuts que falten.</p>
+    <div class="tin">
+      <label>Comença<input type="time" id="duS" value="16:47"></label>
+      <label>Acaba<input type="time" id="duE" value="18:19"></label>
+      <button class="btn" id="duGo">🦘 Calcula amb salts</button>
+    </div>
+    <svg class="nlsvg" id="duSvg" viewBox="0 0 600 150" role="img" aria-label="Salts de temps"></svg>
+    <p class="timeres" id="duOut" aria-live="polite"></p>
+    <p class="msg center" id="duTrap"></p>
+  </div>
+</section>
+
+<section class="sec" id="t3" data-part="temps" style="--c:#C3ADFF">
+  <div class="sec-head"><div class="num">3</div><h2><span class="t">A quina hora acaba?</span></h2></div>
+  <div class="lab">
+    <div class="lab-title">⏰ Avança el rellotge</div>
+    <div class="tm-layout">
+      <svg class="clock" id="clk" viewBox="0 0 200 234" role="img" aria-label="Rellotge"></svg>
+      <div>
+        <div class="tin" style="justify-content:flex-start">
+          <label>Comença<input type="time" id="adS" value="10:38"></label>
+          <label>Dura (minuts)<input class="num" type="number" id="adM" value="46" min="1" max="600" inputmode="numeric"></label>
+          <button class="btn" id="adGo">▶ Avança</button>
+        </div>
+        <p class="timeres" id="adOut" aria-live="polite"></p>
+      </div>
+    </div>
+    <svg class="nlsvg" id="adSvg" viewBox="0 0 600 150" role="img" aria-label="Salts de temps"></svg>
+  </div>
+  <div class="lab">
+    <div class="lab-title">🎯 Joc: problemes de temps</div>
+    <div class="quiz" id="tempsQuiz"></div>
+  </div>
+</section>
+
+<!-- ================= REPTE ================= -->
+<section class="sec" id="repte" data-part="repte" style="--c:#FFB37A">
+  <div class="part" style="--c:#FFB37A;margin-top:20px">
+    <span class="deco" aria-hidden="true">🏆</span>
+    <h2>Repte final</h2>
+    <p>Preparat per a la prova? Encerta’n com a mínim 8 de 12 i guanyaràs l’última estrella.</p>
+  </div>
+  <div class="quiz" id="finalQuiz"></div>
+  <div class="card" style="margin-top:16px">
+    <h3>⭐ Les teves estrelles</h3>
+    <ul class="starlist" id="starList"></ul>
+  </div>
+</section>
+
+</main>
+<footer class="foot wrap">Basat en el Dossier d’estudi de matemàtiques · Tram 1 · 5è de primària.<br>Fet amb 🧮 per aprendre jugant.</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const rand = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const fmt = n => (n<0?'−':'') + String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const f1 = v => (+v).toFixed(1);
+
+/* nombres en lletres (català) */
+const UN = ['zero','un','dos','tres','quatre','cinc','sis','set','vuit','nou','deu','onze','dotze','tretze','catorze','quinze','setze','disset','divuit','dinou'];
+const DE = ['','','vint','trenta','quaranta','cinquanta','seixanta','setanta','vuitanta','noranta'];
+function u100(n){ if(n<20) return UN[n]; const t=Math.floor(n/10), u=n%10; return u ? DE[t]+(t===2?'-i-':'-')+UN[u] : DE[t]; }
+function u1000(n){ const h=Math.floor(n/100), r=n%100; let s = h===0 ? '' : h===1 ? 'cent' : UN[h]+'-cents'; if(r) s += (s?' ':'') + u100(r); return s; }
+function numCa(n){
+  if(n===0) return 'zero'; if(n===1) return 'u';
+  const th=Math.floor(n/1000), r=n%1000; let s='';
+  if(th) s = th===1 ? 'mil' : u1000(th)+' mil';
+  if(r) s += (s?' ':'') + u1000(r);
+  return s;
+}
+/* temps */
+const fmtT = m => `${Math.floor(m/60)%24}.${String(m%60).padStart(2,'0')} h`;
+const fmtDur = m => { const h=Math.floor(m/60), mm=m%60; return h && mm ? `${h} h ${mm} min` : h ? `${h} h` : `${mm} min`; };
+const parseT = v => { const [h,m] = v.split(':').map(Number); return h*60+m; };
+
+/* ---------- So ---------- */
+let actx = null, soundOn = true;
+function tone(freq, dur = .12, type = 'sine', vol = .07){
+  if(!soundOn) return;
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if(actx.state === 'suspended') actx.resume();
+    const o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime;
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + dur + .03);
+  }catch(e){}
+}
+const sfx = {
+  ok(){ tone(660,.1); setTimeout(()=>tone(990,.16),100); },
+  ko(){ tone(200,.22,'triangle',.08); },
+  click(){ tone(540,.05,'square',.025); },
+  star(){ [523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.13),i*90)); }
+};
+$('#sndBtn').addEventListener('click', e => { soundOn = !soundOn; e.currentTarget.textContent = soundOn ? '🔊' : '🔇'; });
+
+/* ---------- Estrelles ---------- */
+const ACTS = {
+  construeix:'Construeix el nombre', valor:'Quin valor té la xifra?', arrodonir:'Cap a on arrodoneixo?', estimar:'Estima sense calcular',
+  compensa:'La resta és una distància', dedueix:'Dedueix el resultat', escrit:'Fes-ho per escrit', transportador:'Obre i tanca l’angle',
+  mesura:'Mesura i classifica', salts:'Els salts del rellotge', temps:'Problemes de temps', repte:'Repte final'
+};
+const TOTAL = Object.keys(ACTS).length;
+const done = new Set();
+function renderStars(){
+  $('#starCount').textContent = done.size; $('#starTotal').textContent = TOTAL;
+  $('#starList').innerHTML = Object.entries(ACTS).map(([k,n]) => `<li class="${done.has(k)?'got':''}">${done.has(k)?'⭐':'☆'} ${n}</li>`).join('');
+}
+let toastT;
+function toast(m){ const t=$('#toast'); t.innerHTML=m; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2800); }
+function confetti(){
+  const em=['⭐','🔢','📐','🎉','⏰','✨'];
+  for(let i=0;i<42;i++){
+    const s=document.createElement('span'); s.className='conf'; s.textContent=em[i%em.length];
+    s.style.left=(Math.random()*100)+'vw'; s.style.animationDuration=(2.2+Math.random()*2.4)+'s'; s.style.animationDelay=(Math.random()*.8)+'s';
+    document.body.appendChild(s); setTimeout(()=>s.remove(),6000);
+  }
+}
+function award(id){
+  if(done.has(id)) return;
+  done.add(id); renderStars(); sfx.star();
+  toast(`⭐ Nova estrella: ${ACTS[id]}!`);
+  const s=$('#stars'); s.classList.remove('bump'); void s.offsetWidth; s.classList.add('bump');
+  if(done.size === TOTAL) setTimeout(()=>{ confetti(); toast('🏆 Tens les 12 estrelles! Estàs a punt per a la prova!'); }, 1400);
+}
+renderStars();
+
+/* ---------- Qüestionari reutilitzable ---------- */
+function makeQuiz(root, questions, {id=null, shuffleQ=false, shuffleO=true, take=0} = {}){
+  let qs, i, score, answered, needed;
+  function start(){
+    qs = shuffleQ ? shuffle(questions.slice()) : questions.slice();
+    if(take) qs = qs.slice(0, take);
+    needed = Math.ceil(qs.length * .6); i = 0; score = 0; show();
+  }
+  function show(){
+    answered = false;
+    const q = qs[i];
+    let opts = q.o.map((t,k) => ({t, ok:k===q.a}));
+    if(shuffleO) opts = shuffle(opts);
+    root.innerHTML = `<div class="qbar"><div style="width:${i/qs.length*100}%"></div></div>
+      <div class="qcount">Pregunta ${i+1} de ${qs.length} · encerts: ${score}</div>
+      ${q.v ? `<div class="qvis">${q.v}</div>` : ''}<p class="qtext">${q.q}</p>
+      <div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}">${o.t}</button>`).join('')}</div>
+      <div class="qfb" aria-live="polite"></div>
+      <button class="btn qnext" hidden>${i < qs.length-1 ? 'Següent pregunta ▶' : 'Mira el resultat 🏁'}</button>`;
+    const bs = $$('.opt', root);
+    bs.forEach((b,k) => b.addEventListener('click', () => {
+      if(answered) return; answered = true;
+      const ok = opts[k].ok;
+      if(ok){ score++; sfx.ok(); } else sfx.ko();
+      bs.forEach((x,j) => { x.disabled = true; if(opts[j].ok) x.classList.add('right'); else if(j===k) x.classList.add('wrong'); });
+      $('.qfb', root).innerHTML = (ok ? '<b class="ok">✅ Molt bé!</b> ' : '<b class="ko">❌ No és aquesta.</b> ') + (q.e || '');
+      $('.qcount', root).textContent = `Pregunta ${i+1} de ${qs.length} · encerts: ${score}`;
+      $('.qnext', root).hidden = false;
+    }));
+    $('.qnext', root).addEventListener('click', () => { i++; if(i < qs.length) show(); else end(); });
+  }
+  function end(){
+    const ok = score >= needed, perfect = score === qs.length;
+    root.innerHTML = `<div class="qend"><div class="emoji-big">${perfect?'🏆':ok?'🎉':'💪'}</div>
+      <h3>Has encertat ${score} de ${qs.length}!</h3>
+      <p>${perfect ? 'Perfecte! Quin crac de les mates!' : ok ? 'Molt bona feina!' : `Gairebé! Necessites ${needed} encerts per guanyar l’estrella. Torna-hi!`}</p>
+      <button class="btn again">↺ Torna-hi</button></div>`;
+    $('.again', root).addEventListener('click', start);
+    if(ok && id) award(id);
+    if(perfect) confetti();
+  }
+  start();
+}
+const W = w => `<span class="qword">${w}</span>`;
+
+/* =====================================================
+   PORTADA: el comptador de nombres
+   ===================================================== */
+(function(){
+  const box=$('#slot'), words=$('#slotWords'), L=['CM','DM','UM','C','D','U'];
+  let html='';
+  L.forEach((l,i)=>{
+    if(i===3) html+='<div class="slotcol"><span class="slot">.</span><small>&nbsp;</small></div>';
+    html+=`<div class="slotcol${i<3?' k':''}"><span class="slot"><span class="reel">${'0123456789'.repeat(3).split('').map(d=>`<span>${d}</span>`).join('')}</span></span><small>${l}</small></div>`;
+  });
+  box.innerHTML=html;
+  const reels=$$('.reel',box); let t;
+  function roll(n){
+    const ds=String(n).padStart(6,'0').split('').map(Number);
+    box.classList.remove('shown'); words.textContent=''; clearTimeout(t);
+    reels.forEach(r=>{ r.style.transition='none'; r.style.transform='translateY(0)'; });
+    void box.offsetWidth;
+    reels.forEach((r,i)=>{ r.style.transition=`transform ${1.1+i*.18}s cubic-bezier(.2,.9,.3,1.04)`; r.style.transform=`translateY(${-(20+ds[i])*1.1}em)`; });
+    t=setTimeout(()=>{ box.classList.add('shown'); words.textContent = '«' + numCa(n) + '»'; }, 2100);
+  }
+  const again=()=>{ roll(rand(100000,999999)); sfx.click(); };
+  box.addEventListener('click', again);
+  box.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); again(); } });
+  setTimeout(()=>roll(152842), 300);
+})();
+
+/* =====================================================
+   NOMBRES
+   ===================================================== */
+function makePV(root, onChange){
+  const names=[['CM','centenes de miler'],['DM','desenes de miler'],['UM','unitats de miler'],['C','centenes'],['D','desenes'],['U','unitats']];
+  const d=[0,0,0,0,0,0];
+  root.innerHTML=names.map(([a,b],i)=>`<div class="pvc ${i<3?'k':'u'}"><div class="pvh">${a}<small>${b}</small></div>
+    <button class="pvb" data-i="${i}" data-s="1" aria-label="Augmenta les ${b}">▲</button><div class="pvd">0</div>
+    <button class="pvb" data-i="${i}" data-s="-1" aria-label="Disminueix les ${b}">▼</button></div>`).join('');
+  const cells=$$('.pvd',root);
+  function render(i){
+    d.forEach((v,k)=>cells[k].textContent=v);
+    if(i!=null){ const el=cells[i]; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+    onChange(d.slice());
+  }
+  $$('.pvb',root).forEach(b=>b.addEventListener('click',()=>{ const i=+b.dataset.i; d[i]=(d[i] + +b.dataset.s + 10)%10; render(i); sfx.click(); }));
+  return { set(arr){ arr.forEach((v,k)=>d[k]=v); render(); } };
+}
+const toNum = d => parseInt(d.join(''),10);
+const digitFacts = n => { const s=String(n); return {s, len:n?s.length:0, sum:[...s].reduce((a,c)=>a+ +c,0), zeros:n?[...s].filter(c=>c==='0').length:0}; };
+
+/* 1. Taula de valors */
+(function(){
+  const pv = makePV($('#pv'), d=>{
+    const n=toNum(d), f=digitFacts(n);
+    $('#pvNum').textContent=fmt(n);
+    $('#pvWords').textContent = '«' + numCa(n) + '»';
+    const terms = d.map((v,k)=>v*10**(5-k)).filter(Boolean).map(fmt);
+    $('#pvDec').textContent = terms.length>1 ? terms.join(' + ') : '';
+    $('#pvFacts').innerHTML = n ? `<span>${f.len} xifres</span><span>suma de les xifres: ${f.sum}</span><span>zeros: ${f.zeros}</span>` : '';
+  });
+  pv.set([1,5,2,8,4,2]);
+  $('#pvZero').addEventListener('click',()=>{ pv.set([0,0,0,0,0,0]); sfx.click(); });
+})();
+
+/* 2. Reptes de nombres */
+(function(){
+  const CH=[
+    {t:'Un nombre de <b>6 xifres</b> amb un <b>5</b> a les desenes de miler, un <b>8</b> a les centenes i un <b>2</b> a les unitats.',
+     c:[['Té 6 xifres',f=>f.len===6],['Té un 5 a les desenes de miler',f=>f.s[1]==='5'],['Té un 8 a les centenes',f=>f.s[3]==='8'],['Té un 2 a les unitats',f=>f.s[5]==='2']]},
+    {t:'El nombre <b>més gran</b> de 6 xifres que té <b>exactament 2 zeros</b> i <b>acaba en 4</b>.', ans:999004, dir:'més gran',
+     c:[['Té 6 xifres',f=>f.len===6],['Té exactament 2 zeros',f=>f.zeros===2],['Acaba en 4',f=>f.s.endsWith('4')]]},
+    {t:'El nombre <b>més petit</b> de 5 xifres que <b>comença per 6</b> i les xifres del qual <b>sumen 18</b>.', ans:60039, dir:'més petit',
+     c:[['Té 5 xifres',f=>f.len===5],['Comença per 6',f=>f.s[0]==='6'],['Les xifres sumen 18',f=>f.sum===18]]},
+    {t:'El nombre <b>més gran</b> de 6 xifres amb <b>totes les xifres diferents</b>.', ans:987654, dir:'més gran',
+     c:[['Té 6 xifres',f=>f.len===6],['Totes les xifres són diferents',f=>new Set(f.s).size===f.s.length]]},
+    {t:'El nombre <b>més petit</b> de 6 xifres amb un <b>7 a les unitats de miler</b> i les xifres del qual <b>sumen 12</b>.', ans:107004, dir:'més petit',
+     c:[['Té 6 xifres',f=>f.len===6],['Té un 7 a les unitats de miler',f=>f.s[2]==='7'],['Les xifres sumen 12',f=>f.sum===12]]}
+  ];
+  let cur=0; const solved=new Set(); let digits=[0,0,0,0,0,0];
+  const pv = makePV($('#pv2'), d=>{ digits=d; const n=toNum(d), f=digitFacts(n);
+    $('#pv2Num').textContent=fmt(n);
+    $('#pv2Facts').innerHTML = n ? `<span>${f.len} xifres</span><span>suma: ${f.sum}</span><span>zeros: ${f.zeros}</span>` : '';
+    $('#chalMsg').innerHTML=''; });
+  const btns=$('#chalBtns');
+  btns.innerHTML = CH.map((c,i)=>`<button class="btn small${i===0?' sel':''}" data-i="${i}">Repte ${i+1}</button>`).join('');
+  function pick(i){ cur=i; $$('.btn',btns).forEach((b,k)=>b.classList.toggle('sel',k===i)); $('#chalTxt').innerHTML='🎯 '+CH[i].t; pv.set([0,0,0,0,0,0]); }
+  $$('.btn',btns).forEach(b=>b.addEventListener('click',()=>{ pick(+b.dataset.i); sfx.click(); }));
+  $('#chalZero').addEventListener('click',()=>{ pv.set([0,0,0,0,0,0]); sfx.click(); });
+  $('#chalCheck').addEventListener('click',()=>{
+    const n=toNum(digits), f=digitFacts(n), ch=CH[cur], msg=$('#chalMsg');
+    if(!n){ msg.innerHTML='Primer construeix el nombre amb la taula! 👆'; return; }
+    const res=ch.c.map(([t,fn])=>[t,fn(f)]);
+    const list=res.map(([t,ok])=>`${ok?'✅':'❌'} ${t}`).join('<br>');
+    if(res.some(r=>!r[1])){ sfx.ko(); msg.innerHTML=`<span class="ko">El ${fmt(n)} encara no compleix totes les condicions:</span><br>${list}`; return; }
+    if(ch.ans && n!==ch.ans){ sfx.ko(); msg.innerHTML=`🤏 El ${fmt(n)} compleix les condicions, però n’hi ha un de <b>${ch.dir}</b>. Pots millorar-lo?<br><small>💡 ${ch.dir==='més gran'?'Posa les xifres grans tan a l’esquerra com puguis.':'Posa xifres petites a l’esquerra i deixa les grans per al final.'}</small>`; return; }
+    sfx.ok(); solved.add(cur); $$('.btn',btns)[cur].classList.add('done');
+    msg.innerHTML=`<span class="ok">🎉 Molt bé! El ${fmt(n)} és correcte.</span>`;
+    if(solved.size>=3) award('construeix');
+  });
+  pick(0);
+})();
+
+/* 3. Quin valor té la xifra? */
+(function(){
+  const Q=[]; const POS=['centenes de miler','desenes de miler','unitats de miler','centenes','desenes','unitats'];
+  for(let k=0;k<5;k++){
+    const ds=shuffle([0,1,2,3,4,5,6,7,8,9]); if(ds[0]===0){ ds[0]=ds[6]; }
+    const d=ds.slice(0,6); const n=toNum(d);
+    let p; do{ p=rand(0,5); }while(d[p]===0);
+    const val=d[p]*10**(5-p);
+    const others=shuffle([0,1,2,3,4,5].filter(x=>x!==5-p)).slice(0,3).map(e=>fmt(d[p]*10**e));
+    const shown=d.map((x,i)=>(i===3?'.':'')+(i===p?`<span style="color:var(--pink)">${x}</span>`:x)).join('');
+    Q.push({v:W(shown), q:`Quin valor té la xifra <b>${d[p]}</b> en el nombre <b>${fmt(n)}</b>?`, o:[fmt(val),...others], a:0, e:`El ${d[p]} és a les <b>${POS[p]}</b>: val ${fmt(val)}.`});
+  }
+  [[304020,[34020,300420,304200]],[40507,[45007,40570,400507]],[100090,[100900,190000,10090]]].forEach(([n,ds])=>{
+    Q.push({v:'✍️', q:`Quin nombre és «<b>${numCa(n)}</b>»?`, o:[fmt(n),...ds.map(fmt)], a:0, e:`${fmt(n)}: compte amb els zeros, que guarden el lloc de les xifres que falten.`});
+  });
+  Q.push({v:'🔢', q:'Com s’escriu <b>152.842</b> amb lletres?', o:[numCa(152842), numCa(150242), numCa(15842), numCa(152084)], a:0, e:'152 mil + 842.'});
+  makeQuiz($('#valorQuiz'), Q, {id:'valor', shuffleQ:true});
+})();
+
+/* =====================================================
+   ESTIMACIÓ
+   ===================================================== */
+(function(){
+  const LN={10:'a les desenes',100:'a les centenes',1000:'als milers'}, LOOK={10:'les unitats',100:'les desenes',1000:'les centenes'};
+  const svg=$('#rdSvg'), btns=$('#rdBtns'), msg=$('#rdMsg'), next=$('#rdNext'), cnt=$('#rdCount');
+  let list, i, score, answered;
+  function build(){
+    const a=[[2638,100]];
+    while(a.length<4){ const n=rand(1000,9999); if(n%100) a.push([n,100]); }
+    while(a.length<6){ const n=rand(1000,9999); if(n%1000) a.push([n,1000]); }
+    while(a.length<8){ const n=rand(100,999); if(n%10) a.push([n,10]); }
+    return a;
+  }
+  const X=(v,lo,L)=>50+(v-lo)/L*500;
+  function draw(n,L,ce){
+    const lo=Math.floor(n/L)*L, hi=lo+L; let s=`<line class="nl-line" x1="40" y1="85" x2="560" y2="85"/>`;
+    for(let k=0;k<=10;k++){ const x=50+k*50, h=k===5?16:(k===0||k===10?18:8); s+=`<line class="nl-tick" x1="${x}" y1="${85-h}" x2="${x}" y2="${85+h}"/>`; }
+    s+=`<text class="svgt" x="50" y="130" text-anchor="middle" font-size="20">${fmt(lo)}</text><text class="svgt" x="550" y="130" text-anchor="middle" font-size="20">${fmt(hi)}</text>`;
+    s+=`<text class="svgm" x="300" y="122" text-anchor="middle" font-size="13">meitat: ${fmt(lo+L/2)}</text>`;
+    const x=X(n,lo,L);
+    if(ce!=null){ const xc=X(ce,lo,L); s+=`<path d="M${f1(x)} 72 Q${f1((x+xc)/2)} 36 ${f1(xc)} 70" fill="none" stroke="#2FA866" stroke-width="4" stroke-linecap="round" pathLength="1" class="draw"/><circle cx="${xc}" cy="85" r="15" fill="none" stroke="#2FA866" stroke-width="4"/>`; }
+    s+=`<circle cx="${f1(x)}" cy="85" r="10" fill="#FF5DA2" stroke="#23264A" stroke-width="2.5"/><text class="svgt" x="${f1(Math.min(530,Math.max(70,x)))}" y="30" text-anchor="middle" font-size="18">${fmt(n)}</text>`;
+    svg.innerHTML=s;
+  }
+  function start(){ list=build(); i=0; score=0; show(); }
+  function show(){
+    answered=false; const [n,L]=list[i], lo=Math.floor(n/L)*L, hi=lo+L;
+    $('#rdLevel').innerHTML=`Arrodoneix <b>${fmt(n)}</b> ${LN[L]}`;
+    draw(n,L);
+    btns.innerHTML=`<button class="btn" data-v="${lo}">⬅ ${fmt(lo)}</button><button class="btn" data-v="${hi}">${fmt(hi)} ➡</button>`;
+    $$('.btn',btns).forEach(b=>b.addEventListener('click',()=>answer(+b.dataset.v,b)));
+    msg.textContent=''; next.hidden=true;
+    cnt.textContent=`Nombre ${i+1} de ${list.length} · encerts: ${score}`;
+  }
+  function answer(v,b){
+    if(answered) return; answered=true;
+    const [n,L]=list[i], lo=Math.floor(n/L)*L, dig=Math.floor(n/(L/10))%10, ce = dig>=5 ? lo+L : lo, ok=v===ce;
+    if(ok){ score++; sfx.ok(); b.classList.add('good'); } else { sfx.ko(); b.classList.add('bad'); }
+    draw(n,L,ce);
+    msg.innerHTML = (ok?'<span class="ok">✅ Molt bé!</span> ':'<span class="ko">❌ Compte!</span> ') + `Per arrodonir ${LN[L]}, mirem ${LOOK[L]}: <b>${dig}</b>. ${dig>=5?'Com que és 5 o més, arrodonim cap amunt':'Com que és menor que 5, arrodonim cap avall'} → <b>${fmt(ce)}</b>.`;
+    cnt.textContent=`Nombre ${i+1} de ${list.length} · encerts: ${score}`;
+    next.hidden=false; next.textContent = i<list.length-1 ? 'Següent ▶' : 'Mira el resultat 🏁';
+  }
+  next.addEventListener('click',()=>{
+    if(next.dataset.end){ delete next.dataset.end; start(); return; }
+    i++; if(i<list.length){ show(); return; }
+    svg.innerHTML=''; btns.innerHTML=''; $('#rdLevel').textContent='';
+    msg.innerHTML = score>=6 ? `🎉 Has encertat ${score} de ${list.length}! Ja saps arrodonir.` : `Has encertat ${score} de ${list.length}. Necessites 6 per a l’estrella. Torna-hi!`;
+    if(score>=6) award('arrodonir');
+    next.textContent='↺ Torna-hi'; next.dataset.end='1';
+  });
+  start();
+
+  makeQuiz($('#estQuiz'), [
+    {v:'🧸', q:'Una botiga ven 1.438 joguines dilluns, 2.271 dimarts i 684 dimecres. Quantes en ven aproximadament? (Arrodoneix a les centenes.)', o:['4.400','4.300','4.500','3.400'], a:0, e:'1.400 + 2.300 + 700 = 4.400.'},
+    {v:'🏟️', q:'Un pavelló té 5.000 places. S’han venut 2.638 entrades i n’hi ha 417 de reservades. Quantes queden aproximadament? (Centenes.)', o:['2.000','2.300','3.000','1.600'], a:0, e:'2.638 → <b>2.600</b> (el 3 de les desenes és menor que 5) i 417 → 400. 2.600 + 400 = 3.000, i 5.000 − 3.000 = 2.000.'},
+    {v:'🚆', q:'Un tren porta 3.812 passatgers al matí i 2.195 a la tarda. Quants en porta aproximadament? (Milers.)', o:['6.000','5.000','7.000','6.100'], a:0, e:'4.000 + 2.000 = 6.000.'},
+    {v:'🚲', q:'En Marc té 1.000 € i compra una bici de 389 € i un casc de 52 €. Quant li queda aproximadament? (Desenes.)', o:['560 €','550 €','600 €','440 €'], a:0, e:'390 + 50 = 440, i 1.000 − 440 = 560.'},
+    {v:'🧮', q:'Quin resultat és raonable per a 4.786 + 2.657?', o:['7.443','6.443','9.443','743'], a:0, e:'Estimem: 4.800 + 2.700 = 7.500. El més proper és 7.443.'},
+    {v:'🎯', q:'Quina és la millor estimació per a 7.003 − 2.846?', o:['7.000 − 2.800 = 4.200','7.000 − 2.000 = 5.000','8.000 − 3.000 = 5.000','7.000 + 2.800 = 9.800'], a:0, e:'Arrodonim a les centenes: 7.000 − 2.800 = 4.200 (el resultat exacte és 4.157).'},
+    {v:'🔢', q:'Arrodoneix 2.638 a les centenes.', o:['2.600','2.700','2.640','3.000'], a:0, e:'Mirem les desenes: 3. És menor que 5, cap avall: 2.600.'},
+    {v:'🤔', q:'Per què és útil estimar abans de calcular?', o:['Per saber si el resultat exacte té sentit i trobar errors','Perquè així no cal fer mai el càlcul exacte','Perquè sempre dona el resultat exacte','Per fer els nombres més grans'], a:0, e:'L’estimació és com un «semàfor»: si el resultat exacte en queda molt lluny, revisa el càlcul.'}
+  ], {id:'estimar'});
+})();
+
+/* =====================================================
+   SUMA I RESTA
+   ===================================================== */
+(function(){
+  const svg=$('#cmpSvg'), eq=$('#cmpEq'), log=$('#cmpLog');
+  let M=1402, S=596, busy=false; const tried=new Set();
+  const X=v=>30+v/2400*540;
+  function draw(m,s){
+    let h=`<line class="nl-line" x1="25" y1="85" x2="575" y2="85"/>`;
+    for(let v=0;v<=2400;v+=200){ h+=`<line class="nl-tick" x1="${X(v)}" y1="${v%400?80:76}" x2="${X(v)}" y2="${v%400?90:94}"/>`; if(v%400===0) h+=`<text class="svgm" x="${X(v)}" y="127" text-anchor="middle" font-size="12">${fmt(v)}</text>`; }
+    const xs=X(s), xm=X(m);
+    h+=`<line x1="${f1(xs)}" y1="46" x2="${f1(xs)}" y2="80" stroke="#2FA866" stroke-width="2" stroke-dasharray="4 4"/><line x1="${f1(xm)}" y1="46" x2="${f1(xm)}" y2="80" stroke="#2FA866" stroke-width="2" stroke-dasharray="4 4"/>`;
+    h+=`<line x1="${f1(xs)}" y1="46" x2="${f1(xm)}" y2="46" stroke="#2FA866" stroke-width="10" stroke-linecap="round"/>`;
+    h+=`<text class="svgt" x="${f1((xs+xm)/2)}" y="30" text-anchor="middle" font-size="16">distància: ${fmt(Math.round(m-s))}</text>`;
+    h+=`<circle cx="${f1(xs)}" cy="85" r="10" fill="#3A86FF" stroke="#23264A" stroke-width="2.5"/><circle cx="${f1(xm)}" cy="85" r="10" fill="#FF9A3D" stroke="#23264A" stroke-width="2.5"/>`;
+    h+=`<text x="${f1(xs)}" y="110" text-anchor="middle" font-size="14" font-weight="900" fill="#3A86FF">${fmt(Math.round(s))}</text><text x="${f1(xm)}" y="110" text-anchor="middle" font-size="14" font-weight="900" fill="#FF7A1A">${fmt(Math.round(m))}</text>`;
+    svg.innerHTML=h;
+    eq.innerHTML=`<span style="color:#FF7A1A">${fmt(Math.round(m))}</span> − <span style="color:#3A86FF">${fmt(Math.round(s))}</span> = ${fmt(Math.round(m-s))}`;
+  }
+  function go(nM,nS,desc,kind){
+    if(busy) return;
+    if(nM>2400 || nS<0 || nS>=nM){ toast('Ens sortim de la recta! Prova un altre botó.'); return; }
+    busy=true; const m0=M, s0=S, d0=M-S, t0=performance.now();
+    const step=now=>{ const k=Math.min(1,(now-t0)/450), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+      draw(m0+(nM-m0)*e, s0+(nS-s0)*e);
+      if(k<1) requestAnimationFrame(step);
+      else { M=nM; S=nS; busy=false; draw(M,S); const d=M-S;
+        const tag = d===d0 ? '<span class="ok">✅ el mateix resultat!</span>' : d>d0 ? `⬆️ ${fmt(d-d0)} més que abans` : `⬇️ ${fmt(d0-d)} menys que abans`;
+        log.insertAdjacentHTML('afterbegin',`<li>${desc}: ${fmt(M)} − ${fmt(S)} = <b>${fmt(d)}</b> · ${tag}</li>`);
+        tried.add(kind); if(tried.has('both') && tried.has('one')) award('compensa'); }
+    };
+    requestAnimationFrame(step); sfx.click();
+  }
+  $$('#s1 [data-a]').forEach(b=>b.addEventListener('click',()=>{
+    const v=+b.dataset.v, a=b.dataset.a;
+    if(a==='both') go(M+v,S+v,`${v>0?'Sumo':'Resto'} ${Math.abs(v)} als dos`,'both');
+    else if(a==='sub') go(M,S+v,`Sumo ${v} només al que restes`,'one');
+    else go(M+v,S,`Sumo ${v} només al primer`,'one');
+  }));
+  $('#cmpRound').addEventListener('click',()=>{ const k=(100-S%100)%100; if(!k){ toast('El que restes ja és un nombre rodó!'); return; } go(M+k,S+k,`Sumo ${k} als dos (el ${fmt(S)} es fa rodó)`,'both'); });
+  $('#cmpReset').addEventListener('click',()=>{ M=1402; S=596; log.innerHTML=''; draw(M,S); sfx.click(); });
+  draw(M,S);
+
+  makeQuiz($('#dedQuiz'), [
+    {v:'➕', q:'Si 3.568 + 427 = 3.995, quant fa 568 + 427?', o:['995','3.995','3.568','1.995'], a:0, e:'El primer sumand té 3.000 menys, el resultat també: 3.995 − 3.000 = 995.'},
+    {v:'➖', q:'Si 4.275 − 1.326 = 2.949, quant fa 4.275 − 1.346?', o:['2.929','2.969','2.949','2.939'], a:0, e:'Restem 20 més, per tant queden 20 menys: 2.949 − 20 = 2.929.'},
+    {v:'⚖️', q:'Si 1.402 − 596 = 806, quant fa 1.406 − 600?', o:['806','810','802','1.006'], a:0, e:'Hem sumat 4 als dos nombres: la distància no canvia.'},
+    {v:'➕', q:'Si 2.500 + 1.300 = 3.800, quant fa 2.500 + 1.310?', o:['3.810','3.790','3.800','4.800'], a:0, e:'Un sumand té 10 més, el resultat també: 3.810.'},
+    {v:'➖', q:'Si 6.000 − 2.400 = 3.600, quant fa 6.100 − 2.400?', o:['3.700','3.500','3.600','3.610'], a:0, e:'El primer nombre té 100 més, el resultat també: 3.700.'},
+    {v:'⚖️', q:'Si 5.020 − 1.978 = 3.042, quant fa 5.022 − 1.980?', o:['3.042','3.044','3.040','3.062'], a:0, e:'Hem sumat 2 als dos nombres: el resultat no canvia.'},
+    {v:'💡', q:'Quina resta és més fàcil i dona el mateix que 853 − 298?', o:['855 − 300','850 − 300','853 − 300','856 − 300'], a:0, e:'Sumem 2 als dos: 855 − 300 = 555.'},
+    {v:'➕', q:'Si 7.250 + 1.480 = 8.730, quant fa 7.250 + 1.380?', o:['8.630','8.830','8.730','7.630'], a:0, e:'Un sumand té 100 menys, el resultat també: 8.630.'}
+  ], {id:'dedueix', shuffleQ:true});
+})();
+
+/* Operacions per escrit */
+(function(){
+  const bank=shuffle([['+',4786,2657],['-',7003,2846],['-',5020,1978],['+',3568,427],['-',4275,1326],['-',1402,596]]);
+  let bi=0, cur, solved=0, inputs=[];
+  const wop=$('#wop'), msg=$('#wMsg');
+  function gen(){
+    if(bi<bank.length) return bank[bi++];
+    if(Math.random()<.5){ return ['+',rand(1000,8999),rand(100,4999)]; }
+    const a = Math.random()<.5 ? rand(2,9)*1000+rand(0,60) : rand(2000,9999);
+    return ['-',a,rand(100,a-100)];
+  }
+  const r100 = n => Math.round(n/100)*100;
+  function render(){
+    const [op,a,b]=cur, res = op==='+' ? a+b : a-b;
+    const la=String(a).length, lb=String(b).length, N = op==='+' ? Math.max(la,lb)+1 : la;
+    const A=String(a).padStart(N,' '), B=String(b).padStart(N,' ');
+    const marks=new Array(N).fill('');
+    if(op==='+'){ let c=0; for(let p=0;p<N;p++){ const j=N-1-p; if(c) marks[j]='1'; const s=(+A[j]||0)+(+B[j]||0)+c; c = s>=10 ? 1 : 0; } }
+    else { const m=[...A].map(x=>x===' '?0:+x); for(let p=0;p<N;p++){ const j=N-1-p, s=+B[j]||0; if(m[j]<s){ m[j]+=10; if(j>0) m[j-1]-=1; } }
+      for(let j=0;j<N;j++){ const orig=A[j]===' '?0:+A[j]; if(m[j]!==orig) marks[j]=String(m[j]); } }
+    wop.style.gridTemplateColumns=`repeat(${N+1}, auto)`;
+    let h='<div class="wc carry"></div>'+marks.map(m=>`<div class="wc carry">${m}</div>`).join('');
+    h+='<div class="wc"></div>'+[...A].map(c=>`<div class="wc">${c===' '?'':c}</div>`).join('');
+    h+=`<div class="wc line">${op==='+'?'+':'−'}</div>`+[...B].map(c=>`<div class="wc line">${c===' '?'':c}</div>`).join('');
+    h+='<div class="wc"></div>'+Array.from({length:N},(_,j)=>`<div class="wc"><input class="dig" data-j="${j}" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Xifra ${N-j} del resultat"></div>`).join('');
+    wop.innerHTML=h; wop.classList.remove('showc');
+    inputs=$$('.dig',wop);
+    inputs.forEach((inp,j)=>{
+      inp.addEventListener('input',()=>{ inp.value=inp.value.replace(/\D/g,'').slice(-1); inp.classList.remove('ok','ko'); if(inp.value && j>0) inputs[j-1].focus(); });
+      inp.addEventListener('focus',()=>inp.select());
+    });
+    $('#wEst').innerHTML=`Estimació: ${fmt(r100(a))} ${op==='+'?'+':'−'} ${fmt(r100(b))} ≈ <b>${fmt(op==='+'?r100(a)+r100(b):r100(a)-r100(b))}</b>`;
+    msg.textContent='';
+    cur.res=res; cur.N=N;
+  }
+  function next(){ cur=gen(); render(); }
+  $('#wCheck').addEventListener('click',()=>{
+    const exp=String(cur.res).padStart(cur.N,' '); let all=true, any=false;
+    inputs.forEach((inp,j)=>{ const u=inp.value, e=exp[j]; if(u) any=true; const ok = e===' ' ? (u===''||u==='0') : u===e; inp.classList.toggle('ok', ok && u!==''); inp.classList.toggle('ko', !ok); if(!ok) all=false; });
+    if(!any){ msg.textContent='Escriu primer el resultat a les caselles 👆'; return; }
+    if(all){ sfx.ok(); solved++; msg.innerHTML=`<span class="ok">🎉 Perfecte! El resultat és ${fmt(cur.res)}. Operacions resoltes: ${solved}</span>`; if(solved>=3) award('escrit'); }
+    else { sfx.ko(); msg.innerHTML='<span class="ko">❌ Hi ha alguna xifra que no és correcta (en vermell). Revisa-la!</span>'; }
+  });
+  $('#wHelp').addEventListener('click',()=>{ wop.classList.toggle('showc'); sfx.click(); });
+  $('#wNew').addEventListener('click',()=>{ next(); sfx.click(); });
+  next();
+})();
+
+/* =====================================================
+   ANGLES
+   ===================================================== */
+const rad = a => a*Math.PI/180;
+const P = (cx,cy,r,a) => [cx + r*Math.cos(rad(a)), cy - r*Math.sin(rad(a))];
+const typ = a => a===0 ? 'nul' : a<90 ? 'agut' : a===90 ? 'recte' : a<180 ? 'obtus' : 'pla';
+const TN = {nul:'nul', agut:'agut', recte:'recte', obtus:'obtús', pla:'pla'};
+const TC = {nul:'#C9CCDA', agut:'#8FE3A8', recte:'#FFC93C', obtus:'#FF9EC4', pla:'#C3ADFF'};
+function wedge(cx,cy,r,a0,a1){ const [x0,y0]=P(cx,cy,r,a0), [x1,y1]=P(cx,cy,r,a1); return `M${cx} ${cy} L${f1(x0)} ${f1(y0)} A${r} ${r} 0 0 0 ${f1(x1)} ${f1(y1)} Z`; }
+function protractor(cx,cy,R){
+  let s=`<path class="prot" d="M${cx-R} ${cy} A${R} ${R} 0 0 1 ${cx+R} ${cy} Z"/>`;
+  for(let a=0;a<=180;a+=5){
+    const [x1,y1]=P(cx,cy,R,a), [x2,y2]=P(cx,cy,a%10===0?R-13:R-7,a);
+    s+=`<line class="ptick" x1="${f1(x1)}" y1="${f1(y1)}" x2="${f1(x2)}" y2="${f1(y2)}"/>`;
+    if(a%10===0){ const [xi,yi]=P(cx,cy,R-24,a), [xo,yo]=P(cx,cy,R+11,a);
+      s+=`<text class="plab" x="${f1(xi)}" y="${f1(yi+4)}" text-anchor="middle">${a}</text><text class="plab2" x="${f1(xo)}" y="${f1(yo+3)}" text-anchor="middle">${180-a}</text>`; }
+  }
+  return s;
+}
+function angleShape(cx,cy,L,a0,a1,col){
+  const span=a1-a0; let s=`<path d="${wedge(cx,cy,42,a0,a1)}" fill="${col}" stroke="#23264A" stroke-width="2" opacity=".9"/>`;
+  if(span===90){ const [ax,ay]=P(cx,cy,20,a0), [bx,by]=P(cx,cy,20,a1), [qx,qy]=P(cx,cy,28.3,a0+45); s+=`<path d="M${f1(ax)} ${f1(ay)} L${f1(qx)} ${f1(qy)} L${f1(bx)} ${f1(by)}" fill="none" stroke="#23264A" stroke-width="2.5"/>`; }
+  const [x0,y0]=P(cx,cy,L,a0), [x1,y1]=P(cx,cy,L,a1);
+  s+=`<line class="ray" x1="${cx}" y1="${cy}" x2="${f1(x0)}" y2="${f1(y0)}"/><line class="ray" x1="${cx}" y1="${cy}" x2="${f1(x1)}" y2="${f1(y1)}"/><circle cx="${cx}" cy="${cy}" r="5" style="fill:var(--ink)"/>`;
+  return s;
+}
+/* targetes de tipus */
+$('#angTypes').innerHTML = [[50,'agut','Angle agut','Menys de 90°'],[90,'recte','Angle recte','Exactament 90°'],[130,'obtus','Angle obtús','Més de 90° i menys de 180°'],[180,'pla','Angle pla','Exactament 180°']]
+  .map(([a,k,t,d])=>`<div class="card"><h3>${t}</h3><svg class="angmini" viewBox="0 0 200 120" aria-hidden="true">${angleShape(100,105,85,0,a,TC[k])}</svg><p style="text-align:center;font-weight:800">${d}</p></div>`).join('');
+
+/* transportador interactiu */
+(function(){
+  const svg=$('#tpSvg'), rng=$('#tpRange'), out=$('#tpOut'), cx=210, cy=215, R=172;
+  svg.innerHTML = protractor(cx,cy,R) + '<g id="tpDyn"></g>';
+  const dyn=$('#tpDyn'); const seen=new Set(); let drag=false;
+  function set(a){
+    a=Math.max(0,Math.min(180,Math.round(a)));
+    if(Math.abs(a-90)<=2) a=90;
+    rng.value=a; const k=typ(a);
+    const [hx,hy]=P(cx,cy,R*.72,a);
+    dyn.innerHTML = angleShape(cx,cy,R+12,0,a,TC[k]) + `<circle class="handle" cx="${f1(hx)}" cy="${f1(hy)}" r="15"/>`;
+    out.innerHTML = `${a}° · angle <span style="background:${TC[k]};color:#23264A;padding:0 .3em;border-radius:10px">${TN[k]}</span>`;
+    if(['agut','recte','obtus'].includes(k)){ seen.add(k); if(seen.size===3) award('transportador'); }
+  }
+  function fromEvent(e){
+    const pt=svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY;
+    const p=pt.matrixTransform(svg.getScreenCTM().inverse());
+    let a=Math.atan2(cy-p.y, p.x-cx)*180/Math.PI; if(a<0) a = p.x>cx ? 0 : 180;
+    set(a);
+  }
+  svg.addEventListener('pointerdown',e=>{ drag=true; try{ svg.setPointerCapture(e.pointerId); }catch(_){} fromEvent(e); });
+  svg.addEventListener('pointermove',e=>{ if(drag) fromEvent(e); });
+  ['pointerup','pointercancel'].forEach(t=>svg.addEventListener(t,()=>drag=false));
+  rng.addEventListener('input',()=>set(+rng.value));
+  $$('#g1 [data-a]').forEach(b=>b.addEventListener('click',()=>{ set(+b.dataset.a); sfx.click(); }));
+  set(55);
+})();
+
+/* joc: mesura i classifica */
+(function(){
+  const svg=$('#mgSvg'), opts=$('#mgOpts'), types=$$('#mgTypes .opt'), fb=$('#mgFb'), next=$('#mgNext'), cnt=$('#mgCount');
+  const cx=210, cy=215, R=172, N=8; let list, i, pts, a1, a2, cur;
+  function start(){
+    const pool=shuffle([20,25,35,40,50,55,65,70,80,90,100,110,115,125,130,140,145,155,160,170]).slice(0,N-1).concat([90]);
+    list=shuffle(pool).map(a=>({a, side:Math.random()<.5?'R':'L'})); i=0; pts=0; show();
+  }
+  function show(){
+    a1=a2=false; cur=list[i]; const {a,side}=cur;
+    const k=typ(a), [b0,b1] = side==='R' ? [0,a] : [180-a,180];
+    svg.innerHTML = protractor(cx,cy,R) + angleShape(cx,cy,R+14,b0,b1,TC[k]).replace(/opacity=".9"/,'opacity=".55"');
+    let ds=[180-a,a+10,a-10,a+20,a-20].filter(x=>x!==a && x>0 && x<180);
+    ds=[...new Set(ds)]; const o=shuffle([a,...ds.slice(0,3)]);
+    opts.innerHTML=o.map(x=>`<button class="opt" data-v="${x}">${x}°</button>`).join('');
+    $$('.opt',opts).forEach(b=>b.addEventListener('click',()=>measure(+b.dataset.v,b)));
+    types.forEach(t=>{ t.disabled=true; t.classList.remove('right','wrong'); });
+    fb.innerHTML=''; next.hidden=true;
+    cnt.textContent=`Angle ${i+1} de ${N} · punts: ${pts} de ${N*2}`;
+  }
+  function measure(v,b){
+    if(a1) return; a1=true; const {a,side}=cur, ok=v===a;
+    $$('.opt',opts).forEach(x=>{ x.disabled=true; if(+x.dataset.v===a) x.classList.add('right'); });
+    if(ok){ pts++; sfx.ok(); fb.innerHTML='✅ Molt bé! L’angle fa <b>'+a+'°</b>.'; }
+    else { b.classList.add('wrong'); sfx.ko(); fb.innerHTML=`❌ L’angle fa <b>${a}°</b>. ${v===180-a?`Has llegit l’altra escala! L’angle comença ${side==='R'?'a la dreta':'a l’esquerra'}: compta des del 0 d’aquell costat.`:'Mira bé per on passa el costat de l’angle.'}`; }
+    types.forEach(t=>t.disabled=false);
+    cnt.textContent=`Angle ${i+1} de ${N} · punts: ${pts} de ${N*2}`;
+  }
+  types.forEach(t=>t.addEventListener('click',()=>{
+    if(!a1 || a2) return; a2=true; const k=typ(cur.a), ok=t.dataset.t===k;
+    types.forEach(x=>{ x.disabled=true; if(x.dataset.t===k) x.classList.add('right'); });
+    if(ok){ pts++; sfx.ok(); } else { t.classList.add('wrong'); sfx.ko(); }
+    fb.innerHTML += `<br>${ok?'✅':'❌'} Un angle de ${cur.a}° és <b>${TN[k]}</b>${k==='agut'?' (menys de 90°)':k==='recte'?' (exactament 90°)':' (més de 90°)'}.`;
+    cnt.textContent=`Angle ${i+1} de ${N} · punts: ${pts} de ${N*2}`;
+    next.hidden=false; next.textContent = i<N-1 ? 'Següent angle ▶' : 'Mira el resultat 🏁';
+  }));
+  next.addEventListener('click',()=>{
+    if(next.dataset.end){ delete next.dataset.end; $('#mgQ').hidden=false; $('#mgQ2').hidden=false; $('#mgTypes').hidden=false; start(); return; }
+    i++; if(i<N){ show(); return; }
+    svg.innerHTML=''; opts.innerHTML=''; $('#mgQ').hidden=true; $('#mgQ2').hidden=true; $('#mgTypes').hidden=true;
+    const ok=pts>=12;
+    fb.innerHTML = `<div class="emoji-big">${pts===N*2?'🏆':ok?'🎉':'💪'}</div><b>Has fet ${pts} punts de ${N*2}!</b><br>${ok?'Ja saps fer servir el transportador!':'Necessites 12 punts per a l’estrella. Torna-hi!'}`;
+    if(ok) award('mesura'); if(pts===N*2) confetti();
+    next.textContent='↺ Torna-hi'; next.dataset.end='1';
+  });
+  start();
+})();
+
+/* =====================================================
+   TEMPS
+   ===================================================== */
+(function(){
+  const r=$('#cvRange');
+  function upd(){ const m=+r.value, full=Math.floor(m/60), rem=m%60;
+    $('#cvOut').textContent = `${m} min = ${m?fmtDur(m):'0 min'}`;
+    let h=''; for(let k=0;k<full;k++) h+=`<div class="pie" style="--p:100%"><b>60</b></div>`;
+    if(rem) h+=`<div class="pie" style="--p:${(rem/60*100).toFixed(1)}%"><b>${rem}</b></div>`;
+    $('#cvPies').innerHTML = h || '<span class="msg">Mou el control 👇</span>';
+  }
+  r.addEventListener('input',upd); upd();
+})();
+
+function segments(s,e){
+  const segs=[]; let cur=s;
+  if(cur%60){ const nxt=Math.ceil(cur/60)*60; if(nxt<=e){ segs.push([cur,nxt]); cur=nxt; } }
+  if(e-cur>=60){ const h=Math.floor((e-cur)/60); segs.push([cur,cur+h*60]); cur+=h*60; }
+  if(cur<e) segs.push([cur,e]);
+  return segs;
+}
+const segLabel = ([a,b]) => (b-a)%60===0 && b-a>=60 && a%60===0 ? `+${(b-a)/60} h` : `+${b-a} min`;
+function drawJumps(svg,s,e){
+  const segs=segments(s,e), tot=e-s;
+  let w=segs.map(([a,b])=>Math.max(90,(b-a)/tot*520)); const k=520/w.reduce((x,y)=>x+y,0); w=w.map(x=>x*k);
+  let h=`<line class="nl-line" x1="25" y1="100" x2="575" y2="100"/>`; let x=40;
+  h+=`<line class="nl-tick" x1="40" y1="90" x2="40" y2="110"/><text class="svgt" x="40" y="134" text-anchor="middle" font-size="14">${fmtT(s)}</text>`;
+  segs.forEach((sg,i)=>{
+    const x2=x+w[i], xm=(x+x2)/2, dl=(i*.55).toFixed(2);
+    h+=`<path d="M${f1(x)} 98 Q${f1(xm)} 30 ${f1(x2)} 98" fill="none" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round" pathLength="1" class="draw" style="--dl:${dl}s"/>`;
+    h+=`<text class="svgt fadein" x="${f1(xm)}" y="56" text-anchor="middle" font-size="15" style="--dl:${dl}s">${segLabel(sg)}</text>`;
+    h+=`<line class="nl-tick" x1="${f1(x2)}" y1="90" x2="${f1(x2)}" y2="110"/><text class="svgt fadein" x="${f1(x2)}" y="134" text-anchor="middle" font-size="14" style="--dl:${dl}s">${fmtT(sg[1])}</text>`;
+    x=x2;
+  });
+  svg.innerHTML=h;
+  return segs;
+}
+const used=new Set();
+function markUsed(k){ used.add(k); if(used.has('A') && used.has('B')) award('salts'); }
+
+/* Quant temps passa? */
+(function(){
+  const out=$('#duOut'), trap=$('#duTrap'), svg=$('#duSvg');
+  function run(user){
+    const sv=$('#duS').value, ev=$('#duE').value;
+    if(!sv || !ev){ out.textContent='Escriu les dues hores.'; return; }
+    const s=parseT(sv), e=parseT(ev);
+    if(e<=s){ svg.innerHTML=''; out.textContent='L’hora d’acabar ha de ser més tard que la d’inici.'; trap.textContent=''; return; }
+    const segs=drawJumps(svg,s,e);
+    out.innerHTML=`Dura <b>${fmtDur(e-s)}</b>`;
+    let t = segs.map(([a,b])=>fmtDur(b-a)).join(' + ') + ` = <b>${fmtDur(e-s)}</b>`;
+    if(e%60 < s%60){ const dec=m=>`${Math.floor(m/60)},${String(m%60).padStart(2,'0')}`;
+      const wrong=((Math.floor(e/60)+(e%60)/100)-(Math.floor(s/60)+(s%60)/100)).toFixed(2).replace('.',',');
+      t += `<br><span class="ko">⚠️ Si ho restessis com si fossin decimals (${dec(e)} − ${dec(s)} = ${wrong}) sortiria malament: una hora té 60 minuts, no 100!</span>`; }
+    trap.innerHTML=t;
+    if(user){ sfx.ok(); markUsed('A'); }
+  }
+  $('#duGo').addEventListener('click',()=>run(true));
+  run(false);
+})();
+
+/* A quina hora acaba? */
+(function(){
+  const clk=$('#clk');
+  let face=`<circle cx="100" cy="100" r="92" style="fill:var(--card);stroke:var(--ink)" stroke-width="5"/>`;
+  for(let k=0;k<60;k++){ const a=k*6, big=k%5===0, [x1,y1]=P(100,100,86,90-a), [x2,y2]=P(100,100,big?74:81,90-a); face+=`<line x1="${f1(x1)}" y1="${f1(y1)}" x2="${f1(x2)}" y2="${f1(y2)}" style="stroke:var(--ink)" stroke-width="${big?3:1.2}"/>`; }
+  for(let k=1;k<=12;k++){ const [x,y]=P(100,100,62,90-k*30); face+=`<text class="svgt" x="${f1(x)}" y="${f1(y+6)}" text-anchor="middle" font-size="17">${k}</text>`; }
+  face+=`<line id="hH" x1="100" y1="100" x2="100" y2="56" stroke="#3A86FF" stroke-width="7" stroke-linecap="round"/><line id="hM" x1="100" y1="100" x2="100" y2="28" stroke="#FF5DA2" stroke-width="5" stroke-linecap="round"/><circle cx="100" cy="100" r="6" style="fill:var(--ink)"/><text id="clkD" class="svgt" x="100" y="224" text-anchor="middle" font-size="20"></text>`;
+  clk.innerHTML=face;
+  function setClock(m){ m=Math.round(m); $('#hH').setAttribute('transform',`rotate(${f1(((m/60)%12)*30)} 100 100)`); $('#hM').setAttribute('transform',`rotate(${(m%60)*6} 100 100)`); $('#clkD').textContent=fmtT(((m%1440)+1440)%1440); }
+  let anim;
+  function run(user){
+    const sv=$('#adS').value, d=parseInt($('#adM').value,10), out=$('#adOut');
+    if(!sv || !(d>=1 && d<=600)){ out.textContent='Escriu una hora i uns minuts entre 1 i 600.'; return; }
+    const s=parseT(sv), e=s+d;
+    drawJumps($('#adSvg'),s,e);
+    cancelAnimationFrame(anim); const t0=performance.now();
+    const step=now=>{ const k=Math.min(1,(now-t0)/1600), ez=1-Math.pow(1-k,3); setClock(s+d*ez); if(k<1) anim=requestAnimationFrame(step); };
+    anim=requestAnimationFrame(step);
+    out.innerHTML=`Acaba a les <b>${fmtT(e%1440)}</b>${e>=1440?' (de l’endemà)':''}`;
+    if(user){ sfx.ok(); markUsed('B'); }
+  }
+  $('#adGo').addEventListener('click',()=>run(true));
+  setClock(parseT($('#adS').value)); run(false);
+
+  makeQuiz($('#tempsQuiz'), [
+    {v:'📝', q:'Una prova comença a les 10.38 h i un alumne triga 46 minuts a acabar-la. A quina hora acaba?', o:['11.24 h','10.84 h','11.84 h','11.14 h'], a:0, e:'10.38 → 11.00 (22 min). Falten 24 min més: 11.24 h.'},
+    {v:'🏀', q:'Un partit de bàsquet comença a les 16.47 h i acaba a les 18.19 h. Quant dura?', o:['1 h 32 min','1 h 72 min','1 h 42 min','2 h 32 min'], a:0, e:'16.47 → 17.00 (13 min) → 18.00 (1 h) → 18.19 (19 min): 13 + 19 = 32 min i 1 h.'},
+    {v:'🥾', q:'Una excursió comença a les 9.25 h i acaba a les 12.08 h. Quant dura?', o:['2 h 43 min','2 h 83 min','3 h 17 min','2 h 17 min'], a:0, e:'9.25 → 10.00 (35 min) → 12.00 (2 h) → 12.08 (8 min): 35 + 8 = 43 min i 2 h.'},
+    {v:'📚', q:'La Júlia estudia 38 minuts al matí i 47 minuts a la tarda. Quant estudia en total?', o:['1 h 25 min','1 h 15 min','85 h','1 h 5 min'], a:0, e:'38 + 47 = 85 min = 60 + 25 → 1 h 25 min.'},
+    {v:'⏳', q:'Quants minuts són una hora i mitja?', o:['90 min','150 min','130 min','60 min'], a:0, e:'60 + 30 = 90 min.'},
+    {v:'🎬', q:'Una pel·lícula comença a les 17.35 h i dura 1 h 50 min. A quina hora acaba?', o:['19.25 h','18.85 h','19.15 h','18.25 h'], a:0, e:'17.35 + 1 h = 18.35. 18.35 → 19.00 (25 min) i encara falten 25 min: 19.25 h.'},
+    {v:'🎒', q:'Surto de casa a les 8.50 h i arribo a l’escola a les 9.15 h. Quant he trigat?', o:['25 min','35 min','65 min','1 h 25 min'], a:0, e:'8.50 → 9.00 (10 min) → 9.15 (15 min): 25 min.'},
+    {v:'🚆', q:'Un tren surt a les 14.45 h i el viatge dura 35 minuts. A quina hora arriba?', o:['15.20 h','14.80 h','15.10 h','15.80 h'], a:0, e:'14.45 → 15.00 (15 min) i encara falten 20 min: 15.20 h.'}
+  ], {id:'temps', shuffleQ:true});
+})();
+
+/* ---------- Repte final ---------- */
+makeQuiz($('#finalQuiz'), [
+  {v:'⬆️', q:'Quin és el nombre més gran de 6 xifres que té exactament 2 zeros i acaba en 4?', o:['999.004','994.004','900.994','999.040'], a:0, e:'Tres 9 a l’esquerra, els dos zeros i el 4 al final.'},
+  {v:'⬇️', q:'Quin és el nombre més petit de 5 xifres que comença per 6 i les xifres del qual sumen 18?', o:['60.039','61.146','60.093','69.300'], a:0, e:'6 + 0 + 0 + 3 + 9 = 18. Els zeros al davant i les xifres grans al final.'},
+  {v:'✍️', q:'Com s’escriu 152.842?', o:[numCa(152842), numCa(150242), numCa(15842), numCa(152084)], a:0, e:'152 mil i 842.'},
+  {v:W('152.842'), q:'Quin valor té el 5?', o:['50.000','5.000','500','5'], a:0, e:'El 5 és a les desenes de miler.'},
+  {v:'🔢', q:'Arrodoneix 2.638 a les centenes.', o:['2.600','2.700','2.640','3.000'], a:0, e:'El 3 de les desenes és menor que 5: cap avall.'},
+  {v:'🎯', q:'Estima 1.438 + 2.271 + 684 arrodonint a les centenes.', o:['4.400','4.300','4.500','9.400'], a:0, e:'1.400 + 2.300 + 700 = 4.400.'},
+  {v:'⚖️', q:'Si 1.402 − 596 = 806, quant fa 1.406 − 600?', o:['806','810','802','1.006'], a:0, e:'Hem sumat 4 als dos nombres: el resultat no canvia.'},
+  {v:'🧮', q:'Quant fa 7.003 − 2.846?', o:['4.157','4.257','5.843','4.167'], a:0, e:'7.003 − 2.846 = 4.157. (Estimació: 7.000 − 2.800 = 4.200.)'},
+  {v:'📐', q:'Un angle de 125° és…', o:['Obtús','Agut','Recte','Pla'], a:0, e:'Més de 90° i menys de 180°: obtús.'},
+  {v:'∟', q:'Quant mesura un angle recte?', o:['90°','180°','45°','100°'], a:0, e:'Exactament 90°.'},
+  {v:'🏀', q:'Un partit va de les 16.47 h a les 18.19 h. Quant dura?', o:['1 h 32 min','1 h 72 min','1 h 42 min','2 h 32 min'], a:0, e:'13 min + 1 h + 19 min = 1 h 32 min.'},
+  {v:'⏰', q:'85 minuts són…', o:['1 h 25 min','8 h 5 min','1 h 15 min','1 h 35 min'], a:0, e:'85 = 60 + 25.'}
+], {id:'repte'});
+
+/* ---------- Navegació activa ---------- */
+(function(){
+  const links=$$('#nav a');
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ const p=e.target.dataset.part; links.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+p)); }
+  }), {rootMargin:'-40% 0px -55% 0px'});
+  $$('[data-part]').forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>
