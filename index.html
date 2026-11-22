@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Racó d’estudi de 5è</title>
+<meta name="description" content="Portal d’entrada a les pàgines interactives d’estudi de 5è: ciències, castellà, matemàtiques i català.">
+<meta name="theme-color" content="#FFE45C">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎒</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FDFDFB; --grid:#E2ECF8; --card:#FFFFFF; --soft:#F3F6FC;
+  --ink:#23264A; --muted:#62668A; --pen:#2F5BD3; --hl:#FFE45C; --line:#23264A;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#191C31; --grid:#252A47; --card:#232845; --soft:#2B3152;
+    --ink:#F2F1FF; --muted:#A9ADCF; --pen:#8FB0FF; --line:#8D93C4;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#191C31; --grid:#252A47; --card:#232845; --soft:#2B3152;
+  --ink:#F2F1FF; --muted:#A9ADCF; --pen:#8FB0FF; --line:#8D93C4;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:18px;line-height:1.55;-webkit-tap-highlight-color:transparent;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);
+  min-height:100vh;
+}
+h1,h2{font-family:"Baloo 2","Nunito",system-ui,sans-serif;line-height:1.05;margin:0;font-weight:800}
+.wrap{max-width:1020px;margin:0 auto;padding:0 16px}
+:focus-visible{outline:4px solid var(--pen);outline-offset:4px;border-radius:14px}
+
+/* capçalera */
+.hero{padding:44px 0 8px;text-align:center}
+.hero .l1{display:block;font-family:"Baloo 2",sans-serif;font-weight:700;font-size:clamp(1.1rem,3.4vw,1.5rem);color:var(--pen)}
+.hero h1{font-size:clamp(2.6rem,9vw,4.8rem)}
+.hero h1 span{background:linear-gradient(transparent 55%,var(--hl) 55%,var(--hl) 90%,transparent 90%);padding:0 .1em;color:inherit}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hero h1 span{background:linear-gradient(transparent 55%,rgba(255,228,92,.35) 55%,rgba(255,228,92,.35) 90%,transparent 90%)}}
+:root[data-theme="dark"] .hero h1 span{background:linear-gradient(transparent 55%,rgba(255,228,92,.35) 55%,rgba(255,228,92,.35) 90%,transparent 90%)}
+.hero p{font-size:1.15rem;font-weight:700;color:var(--muted);max-width:44ch;margin:12px auto 0}
+
+/* targetes */
+.subjects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:34px 0 20px}
+@media (max-width:640px){.subjects{grid-template-columns:1fr;gap:18px}}
+.subj{
+  position:relative;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;
+  text-decoration:none;color:#23264A;background:var(--c);border:3px solid #23264A;border-radius:30px 30px 30px 10px;
+  padding:22px 22px 20px;box-shadow:6px 7px 0 #23264A;transition:transform .12s, box-shadow .12s;
+  opacity:0;animation:rise .5s cubic-bezier(.3,1.4,.5,1) forwards;animation-delay:calc(var(--i) * 90ms + 150ms);
+}
+.subj:active{transform:translate(4px,5px);box-shadow:2px 2px 0 #23264A}
+@media (hover:hover){.subj:hover{transform:translate(-2px,-3px);box-shadow:8px 10px 0 #23264A}.subj:hover .mascot{transform:rotate(-8deg) scale(1.06)}}
+.mascot{width:clamp(78px,15vw,104px);height:auto;transition:transform .25s;flex:none}
+.subj .tag{display:inline-block;font-weight:900;font-size:.85rem;background:rgba(255,255,255,.72);border:2px solid #23264A;border-radius:99px;padding:2px 11px;margin-bottom:6px}
+.subj h2{font-size:clamp(1.65rem,4.6vw,2.1rem)}
+.subj .topics{margin:6px 0 0;font-weight:800;font-size:.98rem;line-height:1.45}
+.subj .go{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-weight:900;background:#23264A;color:#fff;border-radius:99px;padding:7px 16px;font-size:1rem}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.subj{animation:none;opacity:1}}
+
+.tip{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:2.5px dashed var(--line);border-radius:22px;padding:14px 18px;margin:8px 0 0;font-weight:700}
+.tip b{font-weight:900}
+.tip .e{font-size:1.8rem;line-height:1}
+.foot{text-align:center;color:var(--muted);padding:30px 0 50px;font-size:.95rem;font-weight:700}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <span class="l1">5è de primària</span>
+    <h1><span>Racó d’estudi</span></h1>
+    <p>Tria una assignatura per repassar jugant. A cada pàgina hi ha explicacions, experiments i reptes per guanyar estrelles ⭐.</p>
+  </header>
+
+  <nav class="subjects" aria-label="Assignatures">
+    <a class="subj" href="tc-energia.html" style="--c:#FFC93C;--i:0">
+      <svg class="mascot" viewBox="0 0 120 160" aria-hidden="true">
+        <path d="M70 4 L18 88 H54 L40 156 L102 62 H64 L84 4 Z" fill="#FFE45C" stroke="#23264A" stroke-width="5" stroke-linejoin="round"/>
+        <circle cx="56" cy="70" r="5.5" fill="#23264A"/><circle cx="76" cy="70" r="5.5" fill="#23264A"/>
+        <circle cx="58" cy="68" r="1.8" fill="#fff"/><circle cx="78" cy="68" r="1.8" fill="#fff"/>
+        <path d="M57 82 Q67 91 77 82" stroke="#23264A" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="47" cy="80" r="4" fill="#FF8FB8" opacity=".8"/><circle cx="86" cy="80" r="4" fill="#FF8FB8" opacity=".8"/>
+      </svg>
+      <div>
+        <span class="tag">Taller científic</span>
+        <h2>L’energia i l’electricitat</h2>
+        <p class="topics">Formes i fonts d’energia, àtoms, circuits elèctrics i l’electroimant.</p>
+        <span class="go">Entra ▶</span>
+      </div>
+    </a>
+
+    <a class="subj" href="mates.html" style="--c:#7CBDFF;--i:1">
+      <svg class="mascot" viewBox="0 0 130 160" aria-hidden="true">
+        <rect x="12" y="10" width="106" height="140" rx="22" fill="#9CCBFF" stroke="#23264A" stroke-width="5"/>
+        <rect x="26" y="24" width="78" height="46" rx="10" fill="#E8F7FF" stroke="#23264A" stroke-width="4"/>
+        <circle cx="50" cy="44" r="5" fill="#23264A"/><circle cx="80" cy="44" r="5" fill="#23264A"/>
+        <path d="M52 56 Q65 64 78 56" stroke="#23264A" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <g stroke="#23264A" stroke-width="3"><rect x="26" y="84" width="20" height="18" rx="5" fill="#FFE45C"/><rect x="55" y="84" width="20" height="18" rx="5" fill="#FFE45C"/><rect x="84" y="84" width="20" height="18" rx="5" fill="#FF9EC4"/>
+        <rect x="26" y="112" width="20" height="18" rx="5" fill="#FFE45C"/><rect x="55" y="112" width="20" height="18" rx="5" fill="#FFE45C"/><rect x="84" y="112" width="20" height="18" rx="5" fill="#8FE3A8"/></g>
+      </svg>
+      <div>
+        <span class="tag">Matemàtiques</span>
+        <h2>Dossier del Tram 1</h2>
+        <p class="topics">Valor posicional, estimació, suma i resta, angles i temps.</p>
+        <span class="go">Entra ▶</span>
+      </div>
+    </a>
+
+    <a class="subj" href="cat-gram.html" style="--c:#FF9F98;--i:2">
+      <svg class="mascot" viewBox="0 0 140 160" aria-hidden="true">
+        <path d="M70 8 L132 140 Q134 150 124 150 H16 Q6 150 8 140 Z" fill="#7CBDFF" stroke="#23264A" stroke-width="5" stroke-linejoin="round"/>
+        <rect x="63" y="44" width="14" height="40" rx="7" fill="#23264A"/><circle cx="70" cy="98" r="7" fill="#23264A"/>
+        <circle cx="50" cy="118" r="6" fill="#23264A"/><circle cx="90" cy="118" r="6" fill="#23264A"/>
+        <circle cx="52" cy="116" r="2" fill="#fff"/><circle cx="92" cy="116" r="2" fill="#fff"/>
+        <path d="M60 132 Q70 140 80 132" stroke="#23264A" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <span class="tag">Català</span>
+        <h2>Ortografia</h2>
+        <p class="topics">Dígrafs, apòstrof, contraccions, essa sonora i sorda, i dictat.</p>
+        <span class="go">Entra ▶</span>
+      </div>
+    </a>
+
+    <a class="subj" href="cast-tilde.html" style="--c:#FF9EC4;--i:3" hreflang="es">
+      <svg class="mascot" viewBox="0 0 140 150" aria-hidden="true">
+        <rect x="84" y="2" width="20" height="46" rx="10" transform="rotate(38 94 25)" fill="#E8317F" stroke="#23264A" stroke-width="4"/>
+        <ellipse cx="68" cy="96" rx="54" ry="50" fill="#FFC2DB" stroke="#23264A" stroke-width="5"/>
+        <circle cx="52" cy="88" r="7" fill="#23264A"/><circle cx="84" cy="88" r="7" fill="#23264A"/>
+        <circle cx="54.5" cy="85.5" r="2.4" fill="#fff"/><circle cx="86.5" cy="85.5" r="2.4" fill="#fff"/>
+        <path d="M54 106 Q68 118 82 106" stroke="#23264A" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="38" cy="104" r="6" fill="#E8317F" opacity=".45"/><circle cx="98" cy="104" r="6" fill="#E8317F" opacity=".45"/>
+      </svg>
+      <div>
+        <span class="tag">Castellano</span>
+        <h2 lang="es">Detectives de la tilde</h2>
+        <p class="topics" lang="es">Acentuación, diptongos e hiatos y tilde diacrítica.</p>
+        <span class="go">Entra ▶</span>
+      </div>
+    </a>
+  </nav>
+
+  <div class="tip"><span class="e" aria-hidden="true">🔊</span><div>Algunes pàgines llegeixen paraules en veu alta. <b>Puja el volum</b> o fes servir auriculars. Per tornar aquí des de qualsevol pàgina, fes servir el botó <b>Enrere</b> del navegador.</div></div>
+</main>
+<footer class="foot wrap">Fet amb ✏️ per aprendre jugant.</footer>
+</body>
+</html>
